@@ -1,0 +1,19 @@
+{
+  "name": "tetris-cli",
+  "version": "1.0.0",
+  "description": "A CLI-based Tetris game implementation in JavaScript",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node test/test.js"
+  },
+  "keywords": ["tetris", "cli", "game", "javascript"],
+  "author": "",
+  "license": "MIT",
+  "bin": {
+    "tetris": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
