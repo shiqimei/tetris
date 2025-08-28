@@ -86,7 +86,7 @@ class Tetris {
     return true;
   }
 
-  movePiece(dx, dy) {
+  movePiece(dx, dy, isSoftDrop = false) {
     if (!this.currentPiece) return false;
     
     const newPiece = {
@@ -97,6 +97,12 @@ class Tetris {
     
     if (this.isValidMove(newPiece)) {
       this.currentPiece = newPiece;
+      
+      // Add soft drop scoring according to Tech Design
+      if (isSoftDrop && dy > 0) {
+        this.score += 1; // 1 point per cell for soft drop
+      }
+      
       return true;
     }
     return false;
@@ -152,17 +158,50 @@ class Tetris {
     
     if (linesCleared > 0) {
       this.lines += linesCleared;
-      this.score += linesCleared * 100 * this.level;
+      
+      // Implement proper Tetris scoring system according to Tech Design
+      let scoreMultiplier;
+      switch (linesCleared) {
+        case 1:
+          scoreMultiplier = 100; // Single line
+          break;
+        case 2:
+          scoreMultiplier = 300; // Double lines
+          break;
+        case 3:
+          scoreMultiplier = 500; // Triple lines
+          break;
+        case 4:
+          scoreMultiplier = 800; // Tetris (4 lines)
+          break;
+        default:
+          scoreMultiplier = 100; // Fallback
+      }
+      
+      this.score += scoreMultiplier * this.level;
       this.level = Math.floor(this.lines / 10) + 1;
       this.dropInterval = Math.max(100, 1000 - (this.level - 1) * 100);
     }
   }
 
   drop() {
-    if (!this.movePiece(0, 1)) {
+    if (!this.movePiece(0, 1, true)) { // Pass true for soft drop scoring
       this.placePiece();
       this.spawnPiece();
     }
+  }
+
+  hardDrop() {
+    let dropDistance = 0;
+    while (this.movePiece(0, 1)) {
+      dropDistance++;
+    }
+    
+    // Add hard drop scoring according to Tech Design: 2 points per cell
+    this.score += dropDistance * 2;
+    
+    this.placePiece();
+    this.spawnPiece();
   }
 
   update(deltaTime) {

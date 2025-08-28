@@ -52,8 +52,7 @@ class TetrisGame {
             this.tetris.rotatePiece();
             break;
           case 'space':
-            while (this.tetris.movePiece(0, 1)) {}
-            this.tetris.drop();
+            this.tetris.hardDrop();
             break;
           case 'p':
             this.togglePause();
