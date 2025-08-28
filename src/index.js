@@ -45,24 +45,24 @@ class TetrisGame {
 
       if (key) {
         switch (key.name) {
-          case 'left':
-            this.tetris.movePiece(-1, 0);
-            break;
-          case 'right':
-            this.tetris.movePiece(1, 0);
-            break;
-          case 'down':
-            this.tetris.drop();
-            break;
-          case 'up':
-            this.tetris.rotatePiece();
-            break;
-          case 'space':
-            this.tetris.hardDrop();
-            break;
-          case 'p':
-            this.togglePause();
-            break;
+        case 'left':
+          this.tetris.movePiece(-1, 0);
+          break;
+        case 'right':
+          this.tetris.movePiece(1, 0);
+          break;
+        case 'down':
+          this.tetris.drop();
+          break;
+        case 'up':
+          this.tetris.rotatePiece();
+          break;
+        case 'space':
+          this.tetris.hardDrop();
+          break;
+        case 'p':
+          this.togglePause();
+          break;
         }
         this.render();
       }

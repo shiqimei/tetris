@@ -162,20 +162,20 @@ class Tetris {
       // Implement proper Tetris scoring system according to Tech Design
       let scoreMultiplier;
       switch (linesCleared) {
-        case 1:
-          scoreMultiplier = 100; // Single line
-          break;
-        case 2:
-          scoreMultiplier = 300; // Double lines
-          break;
-        case 3:
-          scoreMultiplier = 500; // Triple lines
-          break;
-        case 4:
-          scoreMultiplier = 800; // Tetris (4 lines)
-          break;
-        default:
-          scoreMultiplier = 100; // Fallback
+      case 1:
+        scoreMultiplier = 100; // Single line
+        break;
+      case 2:
+        scoreMultiplier = 300; // Double lines
+        break;
+      case 3:
+        scoreMultiplier = 500; // Triple lines
+        break;
+      case 4:
+        scoreMultiplier = 800; // Tetris (4 lines)
+        break;
+      default:
+        scoreMultiplier = 100; // Fallback
       }
       
       this.score += scoreMultiplier * this.level;
