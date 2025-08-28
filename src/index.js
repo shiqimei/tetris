@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const Tetris = require('./tetris');
-const readline = require('readline');
+const chalk = require('chalk');
 
 class TetrisGame {
   constructor() {
@@ -12,6 +12,8 @@ class TetrisGame {
   }
 
   setupInput() {
+    const readline = require('readline');
+    
     readline.emitKeypressEvents(process.stdin);
     if (process.stdin.isTTY) {
       process.stdin.setRawMode(true);
@@ -37,6 +39,10 @@ class TetrisGame {
         return;
       }
 
+      if (!this.isRunning && key && key.name !== 'p') {
+        return;
+      }
+
       if (key) {
         switch (key.name) {
           case 'left':
@@ -58,8 +64,12 @@ class TetrisGame {
             this.togglePause();
             break;
         }
+        this.render();
       }
     });
+    
+    process.stdin.resume();
+    process.on('SIGINT', this.quit.bind(this));
   }
 
   togglePause() {
@@ -82,34 +92,36 @@ class TetrisGame {
   render() {
     console.clear();
     
-    console.log('='.repeat(22));
-    console.log('       TETRIS');
-    console.log('='.repeat(22));
+    console.log(chalk.cyan('='.repeat(22)));
+    console.log(chalk.yellow.bold('       TETRIS'));
+    console.log(chalk.cyan('='.repeat(22)));
     
     const display = this.tetris.getDisplay();
     
     for (let row of display) {
-      console.log('|' + row.map(cell => cell === ' ' ? '·' : '█').join('') + '|');
+      console.log(chalk.cyan('|') + row.map(cell => 
+        cell === ' ' ? chalk.gray('·') : chalk.red('█')
+      ).join('') + chalk.cyan('|'));
     }
     
-    console.log('=' + '='.repeat(20) + '=');
-    console.log(`Score: ${this.tetris.score.toString().padStart(8, '0')}`);
-    console.log(`Level: ${this.tetris.level.toString().padStart(8, '0')}`);
-    console.log(`Lines: ${this.tetris.lines.toString().padStart(8, '0')}`);
+    console.log(chalk.cyan('=' + '='.repeat(20) + '='));
+    console.log(chalk.green(`Score: ${this.tetris.score.toString().padStart(8, '0')}`));
+    console.log(chalk.blue(`Level: ${this.tetris.level.toString().padStart(8, '0')}`));
+    console.log(chalk.magenta(`Lines: ${this.tetris.lines.toString().padStart(8, '0')}`));
     console.log();
     
     if (this.tetris.gameOver) {
-      console.log('GAME OVER!');
-      console.log('Press R to restart or Q to quit');
+      console.log(chalk.red.bold('GAME OVER!'));
+      console.log(chalk.yellow('Press R to restart or Q to quit'));
     } else if (!this.isRunning) {
-      console.log('PAUSED');
-      console.log('Press P to resume');
+      console.log(chalk.yellow.bold('PAUSED'));
+      console.log(chalk.white('Press P to resume'));
     } else {
-      console.log('Controls:');
-      console.log('← → ↓ ↑ : Move/Rotate');
-      console.log('Space   : Hard Drop');
-      console.log('P       : Pause');
-      console.log('Q       : Quit');
+      console.log(chalk.white('Controls:'));
+      console.log(chalk.white('← → ↓ ↑ : Move/Rotate'));
+      console.log(chalk.white('Space   : Hard Drop'));
+      console.log(chalk.white('P       : Pause'));
+      console.log(chalk.white('Q       : Quit'));
     }
   }
 

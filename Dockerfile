@@ -26,15 +26,15 @@ RUN chown -R tetris:nodejs /app
 # Switch to non-root user
 USER tetris
 
-# Expose port 3000 (standard for Node.js apps, though this is a CLI game)
-EXPOSE 3000
+# No port exposure needed for CLI application
 
 # Set environment variables
 ENV NODE_ENV=production
+ENV TERM=xterm-256color
 
-# Add health check to verify container is running
+# Add health check for CLI app
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "console.log('Container is healthy')" || exit 1
+  CMD node -e "process.exit(0)" || exit 1
 
 # Set default command to start the game
 CMD ["node", "src/index.js"]
