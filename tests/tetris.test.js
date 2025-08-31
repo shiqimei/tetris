@@ -87,6 +87,9 @@ describe('Tetris Game Logic', () => {
     });
 
     test('should prevent movement into occupied cells', () => {
+      // Spawn a piece first
+      tetris.spawnPiece();
+      
       // Place a piece on the board
       tetris.board[19][5] = 'X';
       
