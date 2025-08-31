@@ -15,6 +15,8 @@ COPY src/ ./src/
 
 # Copy any additional files needed
 COPY .gitignore ./
+COPY .eslintrc.js ./
+COPY jest.config.js ./
 
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs && \
