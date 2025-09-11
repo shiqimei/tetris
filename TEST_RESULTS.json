@@ -1,0 +1,53 @@
+{
+  "run": {
+    "command": "node node_modules/.bin/jest --verbose",
+    "passed": false,
+    "duration_ms": 2222,
+    "total_tests": 69,
+    "passed_tests": 64,
+    "failed_tests": 5,
+    "test_suites": {
+      "total": 4,
+      "passed": 1,
+      "failed": 3
+    },
+    "output": "Test run completed with 5 failures out of 69 tests across 4 test suites. Main issues: line clearing logic in edge cases, game over detection in extreme states, and piece placement validation."
+  },
+  "test_files": {
+    "tests/tetris.test.js": {
+      "status": "PASS",
+      "tests": 14,
+      "passed": 14,
+      "failed": 0
+    },
+    "tests/tetris-advanced.test.js": {
+      "status": "FAIL", 
+      "tests": 21,
+      "passed": 20,
+      "failed": 1,
+      "failing_tests": ["should place piece at correct position with obstacles"]
+    },
+    "tests/tetris-edge-cases.test.js": {
+      "status": "FAIL",
+      "tests": 20,
+      "passed": 17,
+      "failed": 3,
+      "failing_tests": [
+        "should handle completely full board except top row",
+        "should handle non-contiguous line clearing", 
+        "should handle complex multi-block piece placement"
+      ]
+    },
+    "tests/tetris-integration.test.js": {
+      "status": "FAIL",
+      "tests": 14,
+      "passed": 13,
+      "failed": 1,
+      "failing_tests": ["should handle line clearing in complete game context"]
+    }
+  },
+  "coverage": {
+    "estimated": "85%",
+    "note": "Most core functionality covered, edge cases have some failures"
+  }
+}

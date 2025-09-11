@@ -87,18 +87,24 @@ describe('Tetris Game Logic', () => {
     });
 
     test('should prevent movement into occupied cells', () => {
-      // Spawn a piece first
-      tetris.spawnPiece();
+      // Clear board first to ensure clean state
+      tetris.board = tetris.createBoard(20, 10);
       
-      // Place a piece on the board
-      tetris.board[19][5] = 'X';
-      
-      const invalidPiece = {
-        ...tetris.currentPiece,
+      // Create a specific test piece (T-piece)
+      const testPiece = {
+        shape: [
+          [' ', 'X', ' '],
+          ['X', 'X', 'X']
+        ],
         x: 5,
         y: 18
       };
-      expect(tetris.isValidMove(invalidPiece)).toBe(false);
+      
+      // Place a blocking piece on the board
+      tetris.board[19][5] = 'X';
+      
+      // This should return false because the piece would overlap
+      expect(tetris.isValidMove(testPiece)).toBe(false);
     });
   });
 

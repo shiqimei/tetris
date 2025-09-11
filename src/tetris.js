@@ -102,7 +102,7 @@ class Tetris {
       
       // Add soft drop scoring according to Tech Design
       if (isSoftDrop && dy > 0) {
-        this.score += 1; // 1 point per cell for soft drop
+        this.score += dy; // 1 point per cell for soft drop
       }
       
       return true;
@@ -111,7 +111,14 @@ class Tetris {
   }
 
   rotatePiece() {
-    if (!this.currentPiece) return;
+    if (!this.currentPiece || !this.currentPiece.shape || !this.currentPiece.shape[0]) return;
+    
+    // Don't rotate O-piece (square) as it looks the same
+    if (this.currentPiece.shape.length === 2 && this.currentPiece.shape[0].length === 2 &&
+        this.currentPiece.shape[0][0] === 'X' && this.currentPiece.shape[0][1] === 'X' &&
+        this.currentPiece.shape[1][0] === 'X' && this.currentPiece.shape[1][1] === 'X') {
+      return; // O-piece doesn't need rotation
+    }
     
     const rotated = this.currentPiece.shape[0].map((_, index) =>
       this.currentPiece.shape.map(row => row[index]).reverse()
@@ -128,14 +135,14 @@ class Tetris {
   }
 
   placePiece() {
-    if (!this.currentPiece) return;
+    if (!this.currentPiece || !this.currentPiece.shape) return;
     
     for (let y = 0; y < this.currentPiece.shape.length; y++) {
       for (let x = 0; x < this.currentPiece.shape[y].length; x++) {
         if (this.currentPiece.shape[y][x] === 'X') {
           const boardX = this.currentPiece.x + x;
           const boardY = this.currentPiece.y + y;
-          if (boardY >= 0) {
+          if (boardY >= 0 && boardY < 20 && boardX >= 0 && boardX < 10) {
             this.board[boardY][boardX] = 'X';
           }
         }
@@ -191,6 +198,8 @@ class Tetris {
   }
 
   drop() {
+    if (!this.currentPiece) return;
+    
     if (!this.movePiece(0, 1, true)) { // Pass true for soft drop scoring
       this.placePiece();
       this.spawnPiece();
@@ -198,7 +207,11 @@ class Tetris {
   }
 
   hardDrop() {
+    if (!this.currentPiece) return;
+    
     let dropDistance = 0;
+    
+    // Find the lowest valid position
     while (this.movePiece(0, 1)) {
       dropDistance++;
     }

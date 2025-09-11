@@ -45,17 +45,17 @@ describe('Tetris Edge Cases and Error Handling', () => {
     });
 
     test('should handle rotation of wide pieces near boundaries', () => {
-      // Place I-piece near right edge in horizontal position
+      // Place I-piece vertically near right edge where horizontal rotation would be blocked
       tetris.currentPiece = {
-        shape: [['X', 'X', 'X', 'X']],
-        x: 8, // Close to right edge
-        y: 10
+        shape: [['X'], ['X'], ['X'], ['X']], // Vertical I-piece
+        x: 8,  // Near right edge - when rotated horizontally would need columns 8,9,10,11
+        y: 16  // Valid vertical position
       };
 
       const originalShape = JSON.parse(JSON.stringify(tetris.currentPiece.shape));
       tetris.rotatePiece();
 
-      // Rotation should be blocked due to boundary
+      // Rotation should be blocked due to right boundary
       expect(tetris.currentPiece.shape).toEqual(originalShape);
     });
   });

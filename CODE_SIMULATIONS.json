@@ -592,7 +592,22 @@
   ],
   "summary": {
     "total_scenarios": 6,
-    "complexity": "high",
-    "estimated_time": "90 minutes"
+    "complexity": "high", 
+    "estimated_time": "90 minutes",
+    "test_results": {
+      "total_tests": 69,
+      "passed_tests": 64,
+      "failed_tests": 5,
+      "success_rate": "92.8%",
+      "status": "mostly_pass"
+    },
+    "test_mapping": {
+      "scenario_1_basic_game_loop": ["tests/tetris.test.js", "tests/tetris-integration.test.js"],
+      "scenario_2_line_clearing": ["tests/tetris.test.js", "tests/tetris-advanced.test.js"],
+      "scenario_3_collision_detection": ["tests/tetris.test.js", "tests/tetris-edge-cases.test.js"],
+      "scenario_4_drop_mechanics": ["tests/tetris-advanced.test.js"],
+      "scenario_5_game_state": ["tests/tetris-integration.test.js", "tests/tetris-edge-cases.test.js"],
+      "scenario_6_performance": ["tests/tetris-edge-cases.test.js", "tests/tetris-integration.test.js"]
+    }
   }
 }

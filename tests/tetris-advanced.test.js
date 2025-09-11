@@ -25,11 +25,11 @@ describe('Tetris Advanced Game Logic', () => {
     });
 
     test('should not rotate when blocked by boundaries', () => {
-      // Place piece at left edge where rotation would be invalid
+      // Place piece near bottom where vertical rotation would be invalid
       tetris.currentPiece = {
-        shape: tetris.pieces[0], // I-piece
-        x: 0,
-        y: 5
+        shape: tetris.pieces[0], // I-piece horizontal
+        x: 5,
+        y: 18  // Too close to bottom for vertical rotation
       };
 
       const originalShape = JSON.parse(JSON.stringify(tetris.currentPiece.shape));
@@ -87,14 +87,19 @@ describe('Tetris Advanced Game Logic', () => {
 
   describe('Hard Drop Functionality', () => {
     test('should calculate correct drop distance', () => {
+      // Ensure clean state
+      tetris.score = 0;
       tetris.spawnPiece();
       const originalScore = tetris.score;
       const startY = tetris.currentPiece.y;
+      const pieceHeight = tetris.currentPiece.shape.length;
       
       tetris.hardDrop();
       
       // Should have moved to bottom and scored appropriately
-      const expectedMinScore = originalScore + (19 - startY) * 2; // 2 points per cell
+      // Piece can drop to position where bottom is at row 19
+      const maxDropDistance = 20 - pieceHeight - startY;
+      const expectedMinScore = originalScore + maxDropDistance * 2; // 2 points per cell
       expect(tetris.score).toBeGreaterThanOrEqual(expectedMinScore);
     });
 
