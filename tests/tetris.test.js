@@ -32,7 +32,8 @@ describe('Tetris Game Logic', () => {
     });
 
     test('should have all 7 standard Tetris pieces defined', () => {
-      expect(tetris.pieces).toHaveLength(7);
+      expect(tetris.pieceTypes).toHaveLength(7);
+      expect(Object.keys(tetris.pieceDefinitions)).toHaveLength(7);
     });
   });
 
@@ -167,21 +168,25 @@ describe('Tetris Game Logic', () => {
     });
 
     test('should rotate T-piece correctly', () => {
-      // Force T-piece (index 2)
+      // Force T-piece with proper structure
       tetris.currentPiece = {
+        type: 'T',
         shape: [
           [' ', 'X', ' '],
           ['X', 'X', 'X']
         ],
+        rotation: 0,
         x: 3,
         y: 5
       };
       
       const originalShape = JSON.stringify(tetris.currentPiece.shape);
+      const originalRotation = tetris.currentPiece.rotation;
       tetris.rotatePiece();
       
       // Should be different after rotation
       expect(JSON.stringify(tetris.currentPiece.shape)).not.toBe(originalShape);
+      expect(tetris.currentPiece.rotation).toBe((originalRotation + 1) % 4);
     });
 
     test('should prevent rotation when it would cause collision', () => {

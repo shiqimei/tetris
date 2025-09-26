@@ -141,9 +141,9 @@ class TetrisGame {
     this.render();
 
     if (!this.tetris.gameOver || this.isRunning) {
-      setTimeout(() => this.gameLoop(), 50);
+      setTimeout(() => this.gameLoop(), 33); // ~30fps (33ms per frame)
     } else {
-      setTimeout(() => this.gameLoop(), 100);
+      setTimeout(() => this.gameLoop(), 200); // 200ms idle intervals as per PRD
     }
   }
 

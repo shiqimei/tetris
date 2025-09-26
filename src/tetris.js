@@ -9,42 +9,53 @@ class Tetris {
     this.dropTime = 0;
     this.dropInterval = 1000;
     
-    this.pieces = [
-      // I-piece
-      [
-        ['X', 'X', 'X', 'X']
+    // Standard Tetris pieces with 4 rotation states each (as per Tech Design)
+    this.pieceDefinitions = {
+      'I': [
+        [['X', 'X', 'X', 'X']], // 0°
+        [['X'], ['X'], ['X'], ['X']], // 90°
+        [['X', 'X', 'X', 'X']], // 180° 
+        [['X'], ['X'], ['X'], ['X']] // 270°
       ],
-      // O-piece  
-      [
-        ['X', 'X'],
-        ['X', 'X']
+      'O': [
+        [['X', 'X'], ['X', 'X']], // All rotations identical
+        [['X', 'X'], ['X', 'X']],
+        [['X', 'X'], ['X', 'X']],
+        [['X', 'X'], ['X', 'X']]
       ],
-      // T-piece
-      [
-        [' ', 'X', ' '],
-        ['X', 'X', 'X']
+      'T': [
+        [[' ', 'X', ' '], ['X', 'X', 'X']], // 0°
+        [['X', ' '], ['X', 'X'], ['X', ' ']], // 90°
+        [['X', 'X', 'X'], [' ', 'X', ' ']], // 180°
+        [[' ', 'X'], ['X', 'X'], [' ', 'X']] // 270°
       ],
-      // S-piece
-      [
-        [' ', 'X', 'X'],
-        ['X', 'X', ' ']
+      'S': [
+        [[' ', 'X', 'X'], ['X', 'X', ' ']], // 0°
+        [['X', ' '], ['X', 'X'], [' ', 'X']], // 90°
+        [[' ', 'X', 'X'], ['X', 'X', ' ']], // 180°
+        [['X', ' '], ['X', 'X'], [' ', 'X']] // 270°
       ],
-      // Z-piece
-      [
-        ['X', 'X', ' '],
-        [' ', 'X', 'X']
+      'Z': [
+        [['X', 'X', ' '], [' ', 'X', 'X']], // 0°
+        [[' ', 'X'], ['X', 'X'], ['X', ' ']], // 90°
+        [['X', 'X', ' '], [' ', 'X', 'X']], // 180°
+        [[' ', 'X'], ['X', 'X'], ['X', ' ']] // 270°
       ],
-      // J-piece
-      [
-        ['X', ' ', ' '],
-        ['X', 'X', 'X']
+      'J': [
+        [['X', ' ', ' '], ['X', 'X', 'X']], // 0°
+        [['X', 'X'], ['X', ' '], ['X', ' ']], // 90°
+        [['X', 'X', 'X'], [' ', ' ', 'X']], // 180°
+        [[' ', 'X'], [' ', 'X'], ['X', 'X']] // 270°
       ],
-      // L-piece
-      [
-        [' ', ' ', 'X'],
-        ['X', 'X', 'X']
+      'L': [
+        [[' ', ' ', 'X'], ['X', 'X', 'X']], // 0°
+        [['X', ' '], ['X', ' '], ['X', 'X']], // 90°
+        [['X', 'X', 'X'], ['X', ' ', ' ']], // 180°
+        [['X', 'X'], [' ', 'X'], [' ', 'X']] // 270°
       ]
-    ];
+    };
+    
+    this.pieceTypes = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
   }
 
   createBoard(height, width) {
@@ -54,10 +65,15 @@ class Tetris {
   }
 
   spawnPiece() {
-    const pieceIndex = Math.floor(Math.random() * this.pieces.length);
+    const pieceTypeIndex = Math.floor(Math.random() * this.pieceTypes.length);
+    const pieceType = this.pieceTypes[pieceTypeIndex];
+    const shape = this.pieceDefinitions[pieceType][0]; // Start with rotation 0
+    
     this.currentPiece = {
-      shape: this.pieces[pieceIndex],
-      x: Math.floor((10 - this.pieces[pieceIndex][0].length) / 2),
+      type: pieceType,
+      shape: shape,
+      rotation: 0,
+      x: Math.floor((10 - shape[0].length) / 2),
       y: 0
     };
     
@@ -111,13 +127,14 @@ class Tetris {
   rotatePiece() {
     if (!this.currentPiece) return;
     
-    const rotated = this.currentPiece.shape[0].map((_, index) =>
-      this.currentPiece.shape.map(row => row[index]).reverse()
-    );
+    // Use proper 4-state rotation system as per Tech Design
+    const nextRotation = (this.currentPiece.rotation + 1) % 4;
+    const rotatedShape = this.pieceDefinitions[this.currentPiece.type][nextRotation];
     
     const rotatedPiece = {
       ...this.currentPiece,
-      shape: rotated
+      shape: rotatedShape,
+      rotation: nextRotation
     };
     
     if (this.isValidMove(rotatedPiece)) {
