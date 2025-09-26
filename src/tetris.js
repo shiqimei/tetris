@@ -185,7 +185,7 @@ class Tetris {
   }
 
   drop() {
-    if (!this.movePiece(0, 1, true)) { // Pass true for soft drop scoring
+    if (!this.movePiece(0, 1)) { // Don't add scoring for automatic drops
       this.placePiece();
       this.spawnPiece();
     }

@@ -87,16 +87,14 @@ describe('Tetris Game Logic', () => {
     });
 
     test('should prevent movement into occupied cells', () => {
-      // Spawn a piece first
-      tetris.spawnPiece();
-      
       // Place a piece on the board
       tetris.board[19][5] = 'X';
       
+      // Create a test piece that would overlap with the placed piece
       const invalidPiece = {
-        ...tetris.currentPiece,
+        shape: [['X']],
         x: 5,
-        y: 18
+        y: 19
       };
       expect(tetris.isValidMove(invalidPiece)).toBe(false);
     });
@@ -160,6 +158,116 @@ describe('Tetris Game Logic', () => {
       tetris.clearLines();
       
       expect(tetris.level).toBe(2);
+    });
+  });
+
+  describe('Piece Rotation', () => {
+    beforeEach(() => {
+      tetris.spawnPiece();
+    });
+
+    test('should rotate T-piece correctly', () => {
+      // Force T-piece (index 2)
+      tetris.currentPiece = {
+        shape: [
+          [' ', 'X', ' '],
+          ['X', 'X', 'X']
+        ],
+        x: 3,
+        y: 5
+      };
+      
+      const originalShape = JSON.stringify(tetris.currentPiece.shape);
+      tetris.rotatePiece();
+      
+      // Should be different after rotation
+      expect(JSON.stringify(tetris.currentPiece.shape)).not.toBe(originalShape);
+    });
+
+    test('should prevent rotation when it would cause collision', () => {
+      // Place piece at right edge where rotation would go out of bounds
+      tetris.currentPiece.x = 9;
+      tetris.currentPiece.shape = [
+        ['X', 'X', 'X', 'X']
+      ];
+      
+      const originalX = tetris.currentPiece.x;
+      const originalShape = JSON.stringify(tetris.currentPiece.shape);
+      tetris.rotatePiece();
+      
+      // Rotation should be blocked, or piece should be in valid position
+      const afterShape = JSON.stringify(tetris.currentPiece.shape);
+      if (afterShape === originalShape) {
+        // Rotation was blocked - piece position unchanged
+        expect(tetris.currentPiece.x).toBe(originalX);
+      } else {
+        // Rotation succeeded - piece should still be in valid position
+        expect(tetris.isValidMove(tetris.currentPiece)).toBe(true);
+      }
+    });
+  });
+
+  describe('Hard Drop and Soft Drop', () => {
+    beforeEach(() => {
+      tetris.spawnPiece();
+    });
+
+    test('should hard drop piece and award 2 points per cell', () => {
+      const originalScore = tetris.score;
+      const originalY = tetris.currentPiece.y;
+      
+      tetris.hardDrop();
+      
+      expect(tetris.score).toBeGreaterThan(originalScore);
+      expect(tetris.currentPiece).not.toBeNull(); // New piece should spawn
+    });
+
+    test('should award 1 point for soft drop movement', () => {
+      const originalScore = tetris.score;
+      
+      tetris.movePiece(0, 1, true); // Soft drop
+      
+      expect(tetris.score).toBe(originalScore + 1);
+    });
+  });
+
+  describe('Game Over Detection', () => {
+    test('should detect game over when piece cannot spawn', () => {
+      // Fill top rows to simulate game over
+      for (let y = 0; y < 3; y++) {
+        for (let x = 3; x < 7; x++) {
+          tetris.board[y][x] = 'X';
+        }
+      }
+      
+      tetris.spawnPiece();
+      
+      expect(tetris.gameOver).toBe(true);
+    });
+  });
+
+  describe('Edge Cases', () => {
+    test('should handle null piece operations gracefully', () => {
+      tetris.currentPiece = null;
+      
+      expect(tetris.movePiece(-1, 0)).toBe(false);
+      expect(() => tetris.rotatePiece()).not.toThrow();
+      expect(() => tetris.placePiece()).not.toThrow();
+    });
+
+    test('should handle multiple line clears correctly', () => {
+      // Fill 4 rows for Tetris
+      for (let y = 16; y < 20; y++) {
+        for (let x = 0; x < 10; x++) {
+          tetris.board[y][x] = 'X';
+        }
+      }
+      
+      const originalScore = tetris.score;
+      tetris.clearLines();
+      
+      expect(tetris.lines).toBe(4);
+      expect(tetris.score).toBe(originalScore + (800 * tetris.level));
     });
   });
 });

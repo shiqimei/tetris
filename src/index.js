@@ -46,15 +46,19 @@ class TetrisGame {
       if (key) {
         switch (key.name) {
         case 'left':
+        case 'a':
           this.tetris.movePiece(-1, 0);
           break;
         case 'right':
+        case 'd':
           this.tetris.movePiece(1, 0);
           break;
         case 'down':
-          this.tetris.drop();
+        case 's':
+          this.tetris.movePiece(0, 1, true); // Use soft drop with scoring
           break;
         case 'up':
+        case 'w':
           this.tetris.rotatePiece();
           break;
         case 'space':
@@ -118,10 +122,10 @@ class TetrisGame {
       console.log(chalk.white('Press P to resume'));
     } else {
       console.log(chalk.white('Controls:'));
-      console.log(chalk.white('← → ↓ ↑ : Move/Rotate'));
-      console.log(chalk.white('Space   : Hard Drop'));
-      console.log(chalk.white('P       : Pause'));
-      console.log(chalk.white('Q       : Quit'));
+      console.log(chalk.white('← → ↓ ↑ / WASD : Move/Rotate'));
+      console.log(chalk.white('Space          : Hard Drop'));
+      console.log(chalk.white('P              : Pause'));
+      console.log(chalk.white('Q              : Quit'));
     }
   }
 
