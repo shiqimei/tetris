@@ -1,133 +1,25 @@
 {
   "run": {
-    "command": "npm test",
+    "command": "node ./node_modules/jest/bin/jest.js --runInBand --testTimeout=10000",
     "passed": false,
-    "duration_ms": 13899,
-    "total_suites": 7,
-    "passed_suites": 3,
-    "failed_suites": 4,
-    "total_tests": 146,
-    "passed_tests": 136,
-    "failed_tests": 10,
-    "output": "Test suites: 4 failed, 3 passed, 7 total. Tests: 10 failed, 136 passed, 146 total"
+    "duration_ms": 0,
+    "output": "{\"numFailedTestSuites\":1,\"numFailedTests\":1,\"numPassedTestSuites\":1,\"numPassedTests\":35,\"numPendingTestSuites\":0,\"numPendingTests\":0,\"numRuntimeErrorTestSuites\":0,\"numTodoTests\":0,\"numTotalTestSuites\":2,\"numTotalTests\":36,\"openHandles\":[],\"snapshot\":{\"added\":0,\"didUpdate\":false,\"failure\":false,\"filesAdded\":0,\"filesRemoved\":0,\"filesRemovedList\":[],\"filesUnmatched\":0,\"filesUpdated\":0,\"matched\":0,\"total\":0,\"unchecked\":0,\"uncheckedKeysByFile\":[],\"unmatched\":0,\"updated\":0},\"startTime\":1760473871938,\"success\":false,\"testResults\":[{\"assertionResults\":[{\"ancestorTitles\":[\"Tetris Comprehensive Game Logic Tests\",\"Piece Definitions\"],\"duration\":3,\"failureDetails\":[],\"failureMessages\":[],\"fullName\":\"Tetris Comprehensive Game Logic Tests Piece Definitions should have I-piece with correct shape\",\"invocations\":1,\"location\":null,\"numPassingAsserts\":1,\"retryReasons\":[],\"status\":\"passed\",\"title\":\"should have I-piece with correct shape\"},{\"ancestorTitles\":[\"Tetris Comprehensive Game Logic Tests\",\"Piece D...[truncated]"
   },
-  "test_suites": [
+  "test_suites": {
+    "total": 2,
+    "passed": 1,
+    "failed": 1
+  },
+  "tests": {
+    "total": 36,
+    "passed": 35,
+    "failed": 1
+  },
+  "failures": [
     {
-      "name": "tetris-advanced.test.js",
-      "status": "PASS",
-      "duration_ms": 8638,
-      "tests_passed": 21,
-      "tests_failed": 0
-    },
-    {
-      "name": "tetris.test.js", 
-      "status": "PASS",
-      "duration_ms": 8771,
-      "tests_passed": 13,
-      "tests_failed": 0
-    },
-    {
-      "name": "tetris-game-integration.test.js",
-      "status": "PASS", 
-      "duration_ms": 8980,
-      "tests_passed": 33,
-      "tests_failed": 0
-    },
-    {
-      "name": "tetris-comprehensive.test.js",
-      "status": "FAIL",
-      "duration_ms": 8831,
-      "tests_passed": 20,
-      "tests_failed": 1,
-      "failing_tests": [
-        {
-          "name": "should not rotate if rotation would cause collision",
-          "error": "Expected: \"[[\\\"X\\\",\\\"X\\\",\\\"X\\\",\\\"X\\\"]]\" Received: \"[[\\\"X\\\"],[\\\"X\\\"],[\\\"X\\\"],[\\\"X\\\"]]\""
-        }
-      ]
-    },
-    {
-      "name": "tetris-edge-cases.test.js", 
-      "status": "FAIL",
-      "duration_ms": 8907,
-      "tests_passed": 25,
-      "tests_failed": 3,
-      "failing_tests": [
-        {
-          "name": "should handle completely full board except top row",
-          "error": "Expected: false Received: true"
-        },
-        {
-          "name": "should handle non-contiguous line clearing", 
-          "error": "Expected: \"X\" Received: \" \""
-        },
-        {
-          "name": "should handle complex multi-block piece placement",
-          "error": "Expected: \"X\" Received: \" \""
-        }
-      ]
-    },
-    {
-      "name": "tetris-integration.test.js",
-      "status": "FAIL", 
-      "duration_ms": 6929,
-      "tests_passed": 8,
-      "tests_failed": 2,
-      "failing_tests": [
-        {
-          "name": "should setup input handling during construction",
-          "error": "Matcher error: received value must be a mock or spy function"
-        },
-        {
-          "name": "should handle line clearing in full game context",
-          "error": "Expected: 1 Received: 0"
-        }
-      ]
-    },
-    {
-      "name": "tetris-scenarios.test.js",
-      "status": "FAIL",
-      "duration_ms": 9050,
-      "tests_passed": 36,
-      "tests_failed": 4,
-      "failing_tests": [
-        {
-          "name": "should prevent rotation into existing blocks",
-          "error": "Expected: \"[[\\\" \\\",\\\"X\\\",\\\" \\\"],[\\\"X\\\",\\\"X\\\",\\\"X\\\"]]\" Received: \"[[\\\"X\\\",\\\" \\\"],[\\\"X\\\",\\\"X\\\"],[\\\"X\\\",\\\" \\\"]]\""
-        },
-        {
-          "name": "should adjust drop interval based on level", 
-          "error": "Expected: 600 Received: 1000"
-        },
-        {
-          "name": "should handle multiple drops in single update",
-          "error": "Expected: 2 Received: 1"
-        },
-        {
-          "name": "should calculate drop interval based on level",
-          "error": "Expected: 800 Received: 1000"
-        }
-      ]
+      "suite": "tetris-comprehensive.test.js",
+      "test": "Tetris Comprehensive Game Logic Tests Piece Rotation should not rotate if rotation would cause collision",
+      "reason": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"[[\\\"X\\\",\\\"X\\\",\\\"X\\\",\\\"X\\\"]]\"\nReceived: \"[[\\\"X\\\"],[\\\"X\\\"],[\\\"X\\\"],[\\\"X\\\"]]\"\n    at Object.toBe (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/tests/tetris-comprehensive.test.js:118:57)\n    at Promise.then.completed (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-circus/build/utils.js:298:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-circus/build/utils.js:231:10)\n    at _callCircusTest (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-circus/build/run.js:316:40)\n    at _runTest (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-circus/build/run.js:252:3)\n    at _runTestsForDescribeBlock (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-circus/build/run.js:126:9)\n    at _runTestsForDescribeBlock (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-circus/build/run.js:121:9)\n    at _runTestsForDescribeBlock (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-circus/build/run.js:121:9)\n    at run (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-circus/build/run.js:71:3)\n    at runAndTransformResultsToJestFormat (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n    at jestAdapter (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n    at runTestInternal (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-runner/build/runTest.js:367:16)\n    at runTest (/private/var/folders/mq/217byl6x4nsb8bh264shgzf40000gn/T/tetris-worktree-2955653918/node_modules/jest-runner/build/runTest.js:444:34)"
     }
-  ],
-  "scenario_mapping": {
-    "Scenario 1: Standard 7-piece Tetromino System": ["PASS - all piece tests passing"],
-    "Scenario 2: Real-time Movement Controls": ["PASS - all movement tests passing"], 
-    "Scenario 3: Piece Rotation Mechanics": ["PARTIAL - rotation blocked test failing"],
-    "Scenario 4: Line Clearing and Scoring System": ["PARTIAL - drop interval calculation failing"],
-    "Scenario 5: Game State Management": ["PASS - all state management tests passing"],
-    "Scenario 6: Terminal Integration and Display": ["PASS - display generation working"],
-    "Scenario 7: Performance and Timing": ["PARTIAL - multiple drop timing failing"]
-  },
-  "summary": {
-    "overall_status": "partial_pass",
-    "core_functionality": "working",
-    "issues_identified": [
-      "Rotation collision detection edge cases",
-      "Drop interval level-based calculation", 
-      "Multiple drop timing in single update",
-      "Complex game state edge cases"
-    ],
-    "pass_rate": "93.2%"
-  }
+  ]
 }
