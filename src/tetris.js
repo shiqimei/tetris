@@ -7,7 +7,10 @@ class Tetris {
     this.lines = 0;
     this.gameOver = false;
     this.dropTime = 0;
-    this.dropInterval = 1000;
+    this.dropInterval = 1000; // 1 cell per second as per PRD
+    this.lockDelay = 500; // 500ms lock delay as per PRD
+    this.lockTimer = 0;
+    this.isLocking = false;
     
     // Standard Tetris pieces with 4 rotation states each (as per Tech Design)
     this.pieceDefinitions = {
@@ -124,11 +127,17 @@ class Tetris {
     return false;
   }
 
-  rotatePiece() {
+  rotatePiece(clockwise = true) {
     if (!this.currentPiece) return;
     
     // Use proper 4-state rotation system as per Tech Design
-    const nextRotation = (this.currentPiece.rotation + 1) % 4;
+    let nextRotation;
+    if (clockwise) {
+      nextRotation = (this.currentPiece.rotation + 1) % 4;
+    } else {
+      // Counterclockwise rotation as per Tech Design
+      nextRotation = (this.currentPiece.rotation - 1 + 4) % 4;
+    }
     const rotatedShape = this.pieceDefinitions[this.currentPiece.type][nextRotation];
     
     const rotatedPiece = {
@@ -176,35 +185,38 @@ class Tetris {
     if (linesCleared > 0) {
       this.lines += linesCleared;
       
-      // Implement proper Tetris scoring system according to Tech Design
-      let scoreMultiplier;
+      // Implement proper Tetris scoring system according to PRD (fixed values)
+      let scorePoints;
       switch (linesCleared) {
       case 1:
-        scoreMultiplier = 100; // Single line
+        scorePoints = 100; // Single line
         break;
       case 2:
-        scoreMultiplier = 300; // Double lines
+        scorePoints = 300; // Double lines
         break;
       case 3:
-        scoreMultiplier = 500; // Triple lines
+        scorePoints = 500; // Triple lines
         break;
       case 4:
-        scoreMultiplier = 800; // Tetris (4 lines)
+        scorePoints = 800; // Tetris (4 lines)
         break;
       default:
-        scoreMultiplier = 100; // Fallback
+        scorePoints = 100; // Fallback
       }
       
-      this.score += scoreMultiplier * this.level;
-      this.level = Math.floor(this.lines / 10) + 1;
-      this.dropInterval = Math.max(100, 1000 - (this.level - 1) * 100);
+      this.score += scorePoints; // Fixed values as per PRD, no level multiplier
+      this.level = Math.floor(this.lines / 10) + 1; // Level progression tracking only
+      // Note: Level progression marked as out of scope in PRD, no speed changes
     }
   }
 
   drop() {
     if (!this.movePiece(0, 1)) { // Don't add scoring for automatic drops
-      this.placePiece();
-      this.spawnPiece();
+      // Start lock delay as per PRD specification (500ms)
+      if (!this.isLocking) {
+        this.isLocking = true;
+        this.lockTimer = 0;
+      }
     }
   }
 
@@ -224,6 +236,18 @@ class Tetris {
   update(deltaTime) {
     if (this.gameOver) return;
     
+    // Handle lock delay timer
+    if (this.isLocking) {
+      this.lockTimer += deltaTime;
+      if (this.lockTimer >= this.lockDelay) {
+        this.placePiece();
+        this.spawnPiece();
+        this.isLocking = false;
+        this.lockTimer = 0;
+      }
+    }
+    
+    // Handle gravity dropping
     this.dropTime += deltaTime;
     if (this.dropTime >= this.dropInterval) {
       this.drop();
@@ -260,6 +284,8 @@ class Tetris {
     this.gameOver = false;
     this.dropTime = 0;
     this.dropInterval = 1000;
+    this.lockTimer = 0;
+    this.isLocking = false;
   }
 }
 

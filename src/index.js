@@ -59,7 +59,11 @@ class TetrisGame {
           break;
         case 'up':
         case 'w':
-          this.tetris.rotatePiece();
+          if (key.shift) {
+            this.tetris.rotatePiece(false); // Counterclockwise
+          } else {
+            this.tetris.rotatePiece(); // Clockwise (default)
+          }
           break;
         case 'space':
           this.tetris.hardDrop();
@@ -123,6 +127,7 @@ class TetrisGame {
     } else {
       console.log(chalk.white('Controls:'));
       console.log(chalk.white('← → ↓ ↑ / WASD : Move/Rotate'));
+      console.log(chalk.white('Shift+↑ / Shift+W : Rotate CCW'));
       console.log(chalk.white('Space          : Hard Drop'));
       console.log(chalk.white('P              : Pause'));
       console.log(chalk.white('Q              : Quit'));

@@ -145,7 +145,7 @@ describe('Tetris Game Logic', () => {
       const originalScore = tetris.score;
       tetris.clearLines();
       
-      expect(tetris.score).toBe(originalScore + (1 * 100 * 2));
+      expect(tetris.score).toBe(originalScore + 100); // Fixed scoring as per PRD
     });
 
     test('should increase level based on lines cleared', () => {
