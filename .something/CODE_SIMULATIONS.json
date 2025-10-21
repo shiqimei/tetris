@@ -1,0 +1,3235 @@
+{
+  "project_name": "pytetris",
+  "scenarios": [
+    {
+      "id": 1,
+      "name": "Seven Standard Tetromino Pieces",
+      "description": "Implement all seven standard Tetris piece types (I, O, T, S, Z, J, L) with correct shapes and colors",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Create Tetromino class",
+          "description": "Implement a Tetromino class that can represent all seven piece types",
+          "context": "src/game/Tetromino.js should export a Tetromino class"
+        },
+        {
+          "step_number": 2,
+          "action": "Define piece shapes as 2D arrays",
+          "description": "Each piece type should have its shape defined as a 2D array where 1 represents a filled cell",
+          "context": "I-piece: 4x4 array, O-piece: 2x2 array, others: 3x3 arrays"
+        },
+        {
+          "step_number": 3,
+          "action": "Assign colors to each piece type",
+          "description": "Each piece should have its designated color according to classic Tetris standards",
+          "context": "I=cyan, O=yellow, T=purple, S=green, Z=red, J=blue, L=orange"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 1,
+          "input": "new Tetromino('I')",
+          "expected": "I-piece with cyan color and horizontal line shape",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should create I-piece with correct shape and color"
+        },
+        {
+          "id": 2,
+          "input": "new Tetromino('O')",
+          "expected": "O-piece with yellow color and 2x2 square shape",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should create O-piece with correct shape and color"
+        },
+        {
+          "id": 3,
+          "input": "new Tetromino('T')",
+          "expected": "T-piece with purple color and T-shape",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should create T-piece with correct shape and color"
+        },
+        {
+          "id": 4,
+          "input": "new Tetromino('S')",
+          "expected": "S-piece with green color and S-shape",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should create S-piece with correct shape and color"
+        },
+        {
+          "id": 5,
+          "input": "new Tetromino('Z')",
+          "expected": "Z-piece with red color and Z-shape",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should create Z-piece with correct shape and color"
+        },
+        {
+          "id": 6,
+          "input": "new Tetromino('J')",
+          "expected": "J-piece with blue color and J-shape",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should create J-piece with correct shape and color"
+        },
+        {
+          "id": 7,
+          "input": "new Tetromino('L')",
+          "expected": "L-piece with orange color and L-shape",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should create L-piece with correct shape and color"
+        }
+      ],
+      "expected": {
+        "success": [
+          "All seven tetromino types instantiate correctly",
+          "Each piece has the correct color assigned",
+          "Each piece has the correct shape as a 2D array"
+        ],
+        "failures": [
+          "Module not found error if Tetromino.js doesn't exist",
+          "Incorrect shapes or colors if implementation is wrong"
+        ],
+        "performance": [
+          "Piece instantiation should be < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Tetromino.js",
+            "snippets": [],
+            "notes": "Not implemented - TDD red phase"
+          }
+        ],
+        "notes": "No implementation exists yet. Tests define the expected structure and behavior."
+      },
+      "expectation": "All seven standard Tetris pieces (I, O, T, S, Z, J, L) should be creatable with correct shapes and colors matching classic Tetris standards.",
+      "prediction": "Tests fail with 'Cannot find module' error because src/game/Tetromino.js does not exist yet.",
+      "explanation": [
+        "TDD Red Phase: Tests written first to define requirements",
+        "All 7 tetromino tests in tests/unit/tetromino.test.js are failing",
+        "Implementation needed: Create Tetromino class with shape definitions and color mappings",
+        "Next step: Implement src/game/Tetromino.js to make these tests pass"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Seven standard tetromino pieces (I, O, T, S, Z, J, L)"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Tetromino Rotation",
+      "description": "Pieces should rotate 90 degrees clockwise, with O-piece remaining unchanged, and returning to original orientation after 4 rotations",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement rotate() method",
+          "description": "Add a rotate method to Tetromino class that rotates the shape 90 degrees clockwise",
+          "context": "Matrix rotation algorithm: transpose then reverse each row"
+        },
+        {
+          "step_number": 2,
+          "action": "Handle O-piece special case",
+          "description": "O-piece should not change orientation when rotated",
+          "context": "Square shape looks identical in all rotations"
+        },
+        {
+          "step_number": 3,
+          "action": "Verify 4-rotation cycle",
+          "description": "Ensure that rotating a piece 4 times returns it to original orientation",
+          "context": "Mathematical property: 4 × 90° = 360° = original position"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 8,
+          "input": "iPiece.rotate()",
+          "expected": "I-piece rotates from horizontal to vertical orientation",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should rotate I-piece 90 degrees clockwise"
+        },
+        {
+          "id": 9,
+          "input": "tPiece.rotate()",
+          "expected": "T-piece rotates 90 degrees clockwise",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should rotate T-piece 90 degrees clockwise"
+        },
+        {
+          "id": 10,
+          "input": "piece.rotate() × 4",
+          "expected": "Piece returns to original orientation",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should rotate piece 4 times to return to original orientation"
+        },
+        {
+          "id": 11,
+          "input": "oPiece.rotate()",
+          "expected": "O-piece remains unchanged after rotation",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "O-piece should remain same shape after rotation"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Pieces rotate 90 degrees clockwise correctly",
+          "O-piece stays the same",
+          "4 rotations return piece to original state"
+        ],
+        "failures": [
+          "Module not found if Tetromino.js missing",
+          "Incorrect rotation logic"
+        ],
+        "performance": [
+          "Rotation operation should be < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Tetromino.js",
+            "snippets": [],
+            "notes": "rotate() method not implemented"
+          }
+        ],
+        "notes": "Rotation method needs implementation in Tetromino class"
+      },
+      "expectation": "Rotation (up arrow/W) for 90-degree clockwise piece rotation should work correctly for all pieces.",
+      "prediction": "Tests fail because Tetromino class and rotate() method don't exist.",
+      "explanation": [
+        "4 rotation tests failing in tests/unit/tetromino.test.js",
+        "Requires matrix rotation algorithm implementation",
+        "Special handling needed for O-piece (no visual change)"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Rotation (up arrow/W) for 90-degree clockwise piece rotation"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Tetromino Spawning and Movement",
+      "description": "Pieces spawn at top center and can move left, right, and down",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Set initial spawn position",
+          "description": "New pieces should spawn at x=3 (center of 10-wide board), y=0 (top)",
+          "context": "Standard Tetris spawn location"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement movement methods",
+          "description": "Add moveLeft(), moveRight(), and moveDown() methods",
+          "context": "Each method adjusts x or y coordinate by 1"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 12,
+          "input": "new Tetromino('T')",
+          "expected": "Piece spawns at x=3, y=0",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should spawn at top center position"
+        },
+        {
+          "id": 13,
+          "input": "piece.moveLeft()",
+          "expected": "x coordinate decreases by 1",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should move left when moveLeft() is called"
+        },
+        {
+          "id": 14,
+          "input": "piece.moveRight()",
+          "expected": "x coordinate increases by 1",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should move right when moveRight() is called"
+        },
+        {
+          "id": 15,
+          "input": "piece.moveDown()",
+          "expected": "y coordinate increases by 1",
+          "type": "unit",
+          "test_file": "tests/unit/tetromino.test.js",
+          "test_name": "should move down when moveDown() is called"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Pieces spawn at correct position",
+          "Movement methods change position correctly"
+        ],
+        "failures": [
+          "Incorrect spawn coordinates",
+          "Movement methods don't update position"
+        ],
+        "performance": [
+          "Movement operations < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Tetromino.js",
+            "snippets": [],
+            "notes": "Position properties and movement methods not implemented"
+          }
+        ],
+        "notes": "Need x, y properties and movement methods"
+      },
+      "expectation": "Piece spawning at top center of playfield with left/right movement for horizontal piece positioning working correctly.",
+      "prediction": "Tests fail because Tetromino class doesn't exist with position tracking.",
+      "explanation": [
+        "4 position/movement tests failing in tests/unit/tetromino.test.js",
+        "Requires x, y coordinate tracking",
+        "Movement methods modify coordinates"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Piece spawning at top center of playfield"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Game Board - 10x20 Grid",
+      "description": "Game board should be a 10-column by 20-row grid, initialized with empty cells",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Create Board class",
+          "description": "Implement Board class with 2D grid array",
+          "context": "src/game/Board.js"
+        },
+        {
+          "step_number": 2,
+          "action": "Initialize 10x20 grid",
+          "description": "Grid should be 20 rows × 10 columns, all cells initialized to 0 (empty)",
+          "context": "Standard Tetris playfield dimensions"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 16,
+          "input": "new Board()",
+          "expected": "Board with grid.length = 20 and grid[0].length = 10",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should create a 10x20 grid"
+        },
+        {
+          "id": 17,
+          "input": "new Board()",
+          "expected": "All cells initialized to 0",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should initialize all cells as empty"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Board creates 10x20 grid",
+          "All cells start as empty (0)"
+        ],
+        "failures": [
+          "Module not found error",
+          "Wrong dimensions",
+          "Cells not initialized properly"
+        ],
+        "performance": [
+          "Board initialization < 5ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Board.js",
+            "snippets": [],
+            "notes": "Not implemented"
+          }
+        ],
+        "notes": "Board class doesn't exist yet"
+      },
+      "expectation": "Clear playfield rendering with standard 10×20 grid should be properly initialized.",
+      "prediction": "Tests fail with 'Cannot find module' error for src/game/Board.js.",
+      "explanation": [
+        "2 board initialization tests failing in tests/unit/board.test.js",
+        "Need Board class with 2D array grid property",
+        "Grid should be 20 rows by 10 columns"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Clear playfield rendering (standard 10×20 grid)"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Collision Detection",
+      "description": "Detect collisions with walls, floor, and placed pieces to prevent invalid moves",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement isColliding() method",
+          "description": "Check if a piece at given position collides with walls, floor, or placed pieces",
+          "context": "Core game mechanic for movement validation"
+        },
+        {
+          "step_number": 2,
+          "action": "Check boundaries",
+          "description": "Detect when piece goes outside 0-9 columns or 0-19 rows",
+          "context": "Wall and floor collision"
+        },
+        {
+          "step_number": 3,
+          "action": "Check placed pieces",
+          "description": "Detect overlap with non-zero cells in grid",
+          "context": "Piece-to-piece collision"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 18,
+          "input": "piece at x=-1",
+          "expected": "isColliding returns true (left wall)",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should detect collision with left wall"
+        },
+        {
+          "id": 19,
+          "input": "piece at x=10",
+          "expected": "isColliding returns true (right wall)",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should detect collision with right wall"
+        },
+        {
+          "id": 20,
+          "input": "piece at y=20",
+          "expected": "isColliding returns true (bottom)",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should detect collision with bottom"
+        },
+        {
+          "id": 21,
+          "input": "piece overlapping placed piece",
+          "expected": "isColliding returns true",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should detect collision with placed pieces"
+        },
+        {
+          "id": 22,
+          "input": "piece at valid position",
+          "expected": "isColliding returns false",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should not detect collision in valid position"
+        },
+        {
+          "id": 23,
+          "input": "rotation would cause collision",
+          "expected": "canRotate returns false",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should prevent rotation if it would cause collision"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Detects all wall/floor collisions",
+          "Detects piece-to-piece collisions",
+          "Returns false for valid positions"
+        ],
+        "failures": [
+          "Module not found",
+          "Collision logic errors allowing invalid moves"
+        ],
+        "performance": [
+          "Collision check < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Board.js",
+            "snippets": [],
+            "notes": "isColliding() and canRotate() methods not implemented"
+          }
+        ],
+        "notes": "Collision detection is critical for game mechanics"
+      },
+      "expectation": "All seven Tetris pieces should rotate and collide correctly in all orientations, preventing invalid moves through walls or other pieces.",
+      "prediction": "Tests fail because Board class doesn't exist with collision detection methods.",
+      "explanation": [
+        "6 collision detection tests failing in tests/unit/board.test.js",
+        "Requires isColliding() method that checks boundaries and grid cells",
+        "Must check piece shape against board state"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "All seven Tetris pieces rotate and collide correctly in all orientations"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Piece Placement and Locking",
+      "description": "When a piece can't move down further, it should be placed on the board",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement placePiece() method",
+          "description": "Transfer piece shape to board grid at piece's position",
+          "context": "Called when piece locks"
+        },
+        {
+          "step_number": 2,
+          "action": "Store piece type/color",
+          "description": "Each cell should store which piece type occupies it for rendering",
+          "context": "Needed for colored display"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 24,
+          "input": "board.placePiece(oPiece at 4,18)",
+          "expected": "Grid cells [18][4], [18][5], [19][4], [19][5] are filled",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should place piece on board"
+        },
+        {
+          "id": 25,
+          "input": "board.placePiece(tPiece)",
+          "expected": "Piece color information stored in cells",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should store piece color information when placing"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Piece shape transferred to grid",
+          "Color/type information stored"
+        ],
+        "failures": [
+          "Piece not placed correctly",
+          "Color data lost"
+        ],
+        "performance": [
+          "Placement operation < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Board.js",
+            "snippets": [],
+            "notes": "placePiece() method not implemented"
+          }
+        ],
+        "notes": "Critical for persisting pieces on board"
+      },
+      "expectation": "Pieces should lock in place when they reach the bottom or land on other pieces, with proper grid state updates.",
+      "prediction": "Tests fail because placePiece() method doesn't exist in Board class.",
+      "explanation": [
+        "2 piece placement tests failing in tests/unit/board.test.js",
+        "Requires placePiece() method that copies piece shape to grid",
+        "Must preserve piece type for rendering"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Automatic gravity-based piece descent"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Line Clearing",
+      "description": "Detect and clear completed horizontal lines, dropping rows above",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement hasCompletedLines()",
+          "description": "Check if any rows are completely filled",
+          "context": "Core Tetris mechanic"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement clearLines()",
+          "description": "Remove completed lines and drop rows above",
+          "context": "Returns number of lines cleared"
+        },
+        {
+          "step_number": 3,
+          "action": "Handle multiple line clears",
+          "description": "Support clearing 1-4 lines simultaneously",
+          "context": "Tetris = 4 lines at once"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 26,
+          "input": "Bottom row completely filled",
+          "expected": "hasCompletedLines() returns true",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should detect completed line"
+        },
+        {
+          "id": 27,
+          "input": "Bottom row has 1 empty cell",
+          "expected": "hasCompletedLines() returns false",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should not detect incomplete line as completed"
+        },
+        {
+          "id": 28,
+          "input": "clearLines() with 1 full row",
+          "expected": "Returns 1, bottom row becomes empty",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should clear single completed line"
+        },
+        {
+          "id": 29,
+          "input": "clearLines() with 3 full rows",
+          "expected": "Returns 3, all cleared",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should clear multiple completed lines"
+        },
+        {
+          "id": 30,
+          "input": "Clear line with piece above",
+          "expected": "Piece drops down one row",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should drop lines above cleared lines"
+        },
+        {
+          "id": 31,
+          "input": "Clear 4 lines (Tetris)",
+          "expected": "Returns 4, all 4 rows cleared",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should clear tetris (4 lines) correctly"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Completed lines detected",
+          "Lines removed and rows dropped",
+          "Multiple lines cleared correctly"
+        ],
+        "failures": [
+          "Lines not detected",
+          "Rows don't drop correctly"
+        ],
+        "performance": [
+          "Line clearing < 5ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Board.js",
+            "snippets": [],
+            "notes": "Line clearing methods not implemented"
+          }
+        ],
+        "notes": "Core mechanic requiring careful row manipulation"
+      },
+      "expectation": "Line clearing when rows are completely filled should work correctly, removing lines and dropping pieces above.",
+      "prediction": "Tests fail because hasCompletedLines() and clearLines() methods don't exist.",
+      "explanation": [
+        "6 line clearing tests failing in tests/unit/board.test.js",
+        "Requires detection of full rows and removal logic",
+        "Must handle dropping of rows above cleared lines",
+        "Should support clearing 1-4 lines simultaneously"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Line clearing when rows are completely filled"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Game Over Detection",
+      "description": "Detect when pieces stack to the top of the playfield",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement isGameOver() method",
+          "description": "Check if top rows contain any pieces",
+          "context": "Game ends when pieces reach spawn area"
+        },
+        {
+          "step_number": 2,
+          "action": "Check spawn area",
+          "description": "If top rows (y=0 or y=1) have any filled cells, game is over",
+          "context": "Classic Tetris game over condition"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 32,
+          "input": "Top row filled with pieces",
+          "expected": "isGameOver() returns true",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should detect game over when pieces reach top"
+        },
+        {
+          "id": 33,
+          "input": "Only bottom rows filled",
+          "expected": "isGameOver() returns false",
+          "type": "unit",
+          "test_file": "tests/unit/board.test.js",
+          "test_name": "should not detect game over when board has space"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Game over detected when top is blocked",
+          "Game continues when top is clear"
+        ],
+        "failures": [
+          "Game over not detected",
+          "False positives"
+        ],
+        "performance": [
+          "Game over check < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Board.js",
+            "snippets": [],
+            "notes": "isGameOver() method not implemented"
+          }
+        ],
+        "notes": "Simple check of top rows"
+      },
+      "expectation": "Game over detection when pieces stack to the top should trigger properly.",
+      "prediction": "Tests fail because isGameOver() method doesn't exist in Board class.",
+      "explanation": [
+        "2 game over detection tests failing in tests/unit/board.test.js",
+        "Requires checking if top rows contain any pieces",
+        "Should return true when spawn area is blocked"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Game over when pieces stack to the top"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Scoring System - Soft and Hard Drop",
+      "description": "Award 1 point per cell for soft drop (manual down), 2 points per cell for hard drop (space), 0 for gravity",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Create ScoringEngine class",
+          "description": "Implement scoring calculations separate from game logic",
+          "context": "src/game/ScoringEngine.js"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement drop scoring methods",
+          "description": "calculateSoftDrop(cells), calculateHardDrop(cells), calculateGravityDrop(cells)",
+          "context": "Soft = 1pt/cell, Hard = 2pts/cell, Gravity = 0pts"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 34,
+          "input": "calculateSoftDrop(5)",
+          "expected": "Returns 5 points",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should award 1 point per cell for soft drop"
+        },
+        {
+          "id": 35,
+          "input": "calculateGravityDrop(10)",
+          "expected": "Returns 0 points",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should award 0 points for gravity drops"
+        },
+        {
+          "id": 36,
+          "input": "softDrop(3) then softDrop(2)",
+          "expected": "Total score = 5",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should accumulate soft drop points"
+        },
+        {
+          "id": 37,
+          "input": "calculateHardDrop(5)",
+          "expected": "Returns 10 points",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should award 2 points per cell for hard drop"
+        },
+        {
+          "id": 38,
+          "input": "hardDrop() from y=5 to bottom",
+          "expected": "Score = distance × 2",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should calculate hard drop distance correctly"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Soft drop awards 1 pt/cell",
+          "Hard drop awards 2 pts/cell",
+          "Gravity awards 0 points"
+        ],
+        "failures": [
+          "Module not found",
+          "Incorrect point calculations"
+        ],
+        "performance": [
+          "Scoring calculations < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/ScoringEngine.js",
+            "snippets": [],
+            "notes": "Not implemented"
+          },
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Not implemented"
+          }
+        ],
+        "notes": "Need scoring engine and integration with Game class"
+      },
+      "expectation": "Soft drop scoring of 1 point per cell descended manually, hard drop scoring of 2 points per cell descended instantly, with no points for automatic gravity drops.",
+      "prediction": "Tests fail with 'Cannot find module' errors for ScoringEngine.js and Game.js.",
+      "explanation": [
+        "5 drop scoring tests failing in tests/unit/scoring.test.js",
+        "Requires ScoringEngine class with calculation methods",
+        "Game class needs to track score and call scoring methods"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Soft drop scoring: 1 point per cell descended manually"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Line Clear Scoring",
+      "description": "Award points based on classic Tetris formula: single=100×level, double=300×level, triple=500×level, tetris=800×level",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement calculateLineClear() method",
+          "description": "Method takes lines cleared and current level, returns points",
+          "context": "Classic Tetris scoring formula"
+        },
+        {
+          "step_number": 2,
+          "action": "Apply correct multipliers",
+          "description": "1 line=100, 2=300, 3=500, 4=800, all multiplied by level",
+          "context": "Rewards clearing multiple lines at once"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 39,
+          "input": "calculateLineClear(1, 1)",
+          "expected": "Returns 100",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should award 100 points for single line at level 1"
+        },
+        {
+          "id": 40,
+          "input": "calculateLineClear(2, 1)",
+          "expected": "Returns 300",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should award 300 points for double lines at level 1"
+        },
+        {
+          "id": 41,
+          "input": "calculateLineClear(3, 1)",
+          "expected": "Returns 500",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should award 500 points for triple lines at level 1"
+        },
+        {
+          "id": 42,
+          "input": "calculateLineClear(4, 1)",
+          "expected": "Returns 800",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should award 800 points for tetris (4 lines) at level 1"
+        },
+        {
+          "id": 43,
+          "input": "calculateLineClear(1-4, 5)",
+          "expected": "All values multiplied by 5",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should scale line clear points by level"
+        },
+        {
+          "id": 44,
+          "input": "calculateLineClear(4, 10)",
+          "expected": "Returns 8000",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should scale line clear points at level 10"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Correct points for 1-4 lines",
+          "Proper scaling by level"
+        ],
+        "failures": [
+          "Wrong point values",
+          "Level scaling broken"
+        ],
+        "performance": [
+          "Calculation < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/ScoringEngine.js",
+            "snippets": [],
+            "notes": "calculateLineClear() not implemented"
+          }
+        ],
+        "notes": "Classic Tetris scoring formula"
+      },
+      "expectation": "Line clear scoring following classic Tetris formula with correct point values (100/300/500/800 × level) for 1-4 lines cleared.",
+      "prediction": "Tests fail because ScoringEngine class doesn't exist with calculateLineClear() method.",
+      "explanation": [
+        "6 line clear scoring tests failing in tests/unit/scoring.test.js",
+        "Requires lookup table or formula for base scores",
+        "Must multiply by current level"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Line clear scoring following classic Tetris formula:\n  - Single line: 100 × level\n  - Double lines: 300 × level\n  - Triple lines: 500 × level\n  - Tetris (4 lines): 800 × level"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Level Progression System",
+      "description": "Start at level 1, advance every 10 lines cleared, increase gravity speed with level",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Track lines cleared",
+          "description": "Game should maintain linesCleared counter",
+          "context": "Used for level progression"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement level advancement",
+          "description": "Level = floor(linesCleared / 10) + 1",
+          "context": "Every 10 lines increases level"
+        },
+        {
+          "step_number": 3,
+          "action": "Calculate gravity speed",
+          "description": "Gravity delay decreases as level increases",
+          "context": "Makes game progressively harder"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 45,
+          "input": "new Game()",
+          "expected": "game.level = 1",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should start at level 1"
+        },
+        {
+          "id": 46,
+          "input": "linesCleared=10, updateLevel()",
+          "expected": "level = 2",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should advance level after clearing 10 lines"
+        },
+        {
+          "id": 47,
+          "input": "linesCleared=20, updateLevel()",
+          "expected": "level = 3",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should advance to level 3 after 20 lines"
+        },
+        {
+          "id": 48,
+          "input": "clearLines(4)",
+          "expected": "linesCleared = 4",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should track total lines cleared"
+        },
+        {
+          "id": 49,
+          "input": "getGravitySpeed(1) vs getGravitySpeed(2) vs getGravitySpeed(5)",
+          "expected": "Speed increases (delay decreases) with level",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should increase fall speed with each level"
+        },
+        {
+          "id": 50,
+          "input": "getGravitySpeed(1) and getGravitySpeed(10)",
+          "expected": "Level 1 > 500ms, Level 10 < 200ms",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should calculate gravity delay based on level"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Game starts at level 1",
+          "Level increases every 10 lines",
+          "Gravity speed increases with level"
+        ],
+        "failures": [
+          "Level progression broken",
+          "Gravity speed not scaling"
+        ],
+        "performance": [
+          "Level calculations < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Level tracking and gravity speed not implemented"
+          }
+        ],
+        "notes": "Core progression system"
+      },
+      "expectation": "Level-based difficulty system starting at level 1, with increased gravity speed as level increases and level advancement based on lines cleared (every 10 lines).",
+      "prediction": "Tests fail because Game class doesn't exist with level progression logic.",
+      "explanation": [
+        "6 level progression tests failing in tests/unit/scoring.test.js",
+        "Requires level property, linesCleared tracking",
+        "getGravitySpeed() method for speed calculation",
+        "updateLevel() or checkLevelUp() method"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Level-based difficulty system starting at level 1"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Score Tracking",
+      "description": "Maintain cumulative score throughout game, never allow negative scores",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Add score property to Game",
+          "description": "Initialize to 0, maintain throughout gameplay",
+          "context": "Core game state"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement addScore() method",
+          "description": "Add points to score, ensure non-negative",
+          "context": "Called by scoring engine"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 51,
+          "input": "addScore(100), addScore(300), addScore(50)",
+          "expected": "score = 450",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should maintain cumulative score"
+        },
+        {
+          "id": 52,
+          "input": "score=0, addScore(-50)",
+          "expected": "score >= 0",
+          "type": "unit",
+          "test_file": "tests/unit/scoring.test.js",
+          "test_name": "should never have negative score"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Score accumulates correctly",
+          "Score never goes negative"
+        ],
+        "failures": [
+          "Score calculation errors",
+          "Negative scores possible"
+        ],
+        "performance": [
+          "Score updates < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Score tracking not implemented"
+          }
+        ],
+        "notes": "Simple integer accumulation with bounds checking"
+      },
+      "expectation": "Score should accumulate correctly throughout gameplay and never become negative.",
+      "prediction": "Tests fail because Game class doesn't exist with score property and addScore() method.",
+      "explanation": [
+        "2 score tracking tests failing in tests/unit/scoring.test.js",
+        "Requires score property initialized to 0",
+        "addScore() method with non-negative validation"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Display current level, score, and lines cleared"
+      }
+    },
+    {
+      "id": 13,
+      "name": "Input Handler - Raw Mode",
+      "description": "Enable raw terminal mode for immediate keypress detection without line buffering",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Create InputHandler class",
+          "description": "Manage terminal raw mode and keypress events",
+          "context": "src/input/InputHandler.js"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement start() and stop() methods",
+          "description": "Enable/disable raw mode with process.stdin.setRawMode()",
+          "context": "Critical for cleanup"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 53,
+          "input": "new InputHandler()",
+          "expected": "Handler exists, rawModeEnabled = false initially",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should initialize input handler with raw mode"
+        },
+        {
+          "id": 54,
+          "input": "handler.start()",
+          "expected": "rawModeEnabled = true",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should enable raw mode when start() is called"
+        },
+        {
+          "id": 55,
+          "input": "handler.start(), handler.stop()",
+          "expected": "rawModeEnabled = false",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should disable raw mode when stop() is called"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Handler initializes correctly",
+          "Raw mode toggles properly"
+        ],
+        "failures": [
+          "Module not found",
+          "Raw mode not toggling"
+        ],
+        "performance": [
+          "Mode toggle < 10ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/input/InputHandler.js",
+            "snippets": [],
+            "notes": "Not implemented"
+          }
+        ],
+        "notes": "Critical for terminal game input"
+      },
+      "expectation": "Raw mode with keypress events should enable immediate keypress detection for responsive controls under 50ms.",
+      "prediction": "Tests fail with 'Cannot find module' error for src/input/InputHandler.js.",
+      "explanation": [
+        "3 input handler initialization tests failing",
+        "Requires InputHandler class with start/stop methods",
+        "Must manage process.stdin.setRawMode()"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Raw mode with keypress events. This is the standard approach for terminal games, provides necessary responsiveness"
+      }
+    },
+    {
+      "id": 14,
+      "name": "Dual Control Schemes - Arrow Keys",
+      "description": "Map arrow keys to game actions: left/right for movement, down for soft drop, up for rotate, space for hard drop",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement mapKeyToAction() method",
+          "description": "Translate keypress events to game action strings",
+          "context": "Returns action name or null"
+        },
+        {
+          "step_number": 2,
+          "action": "Map arrow keys",
+          "description": "left→moveLeft, right→moveRight, down→softDrop, up→rotate, space→hardDrop",
+          "context": "Traditional Tetris controls"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 56,
+          "input": "mapKeyToAction({name: 'left'})",
+          "expected": "Returns 'moveLeft'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map left arrow to move left action"
+        },
+        {
+          "id": 57,
+          "input": "mapKeyToAction({name: 'right'})",
+          "expected": "Returns 'moveRight'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map right arrow to move right action"
+        },
+        {
+          "id": 58,
+          "input": "mapKeyToAction({name: 'down'})",
+          "expected": "Returns 'softDrop'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map down arrow to soft drop action"
+        },
+        {
+          "id": 59,
+          "input": "mapKeyToAction({name: 'up'})",
+          "expected": "Returns 'rotate'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map up arrow to rotate action"
+        },
+        {
+          "id": 60,
+          "input": "mapKeyToAction({name: 'space'})",
+          "expected": "Returns 'hardDrop'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map space to hard drop action"
+        }
+      ],
+      "expected": {
+        "success": [
+          "All arrow keys map correctly",
+          "Space maps to hard drop"
+        ],
+        "failures": [
+          "Key mappings wrong or missing"
+        ],
+        "performance": [
+          "Key mapping < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/input/InputHandler.js",
+            "snippets": [],
+            "notes": "mapKeyToAction() not implemented"
+          }
+        ],
+        "notes": "Arrow key support is primary control scheme"
+      },
+      "expectation": "Arrow key controls should work: left/right for movement, down for soft drop, up for rotate, space for hard drop.",
+      "prediction": "Tests fail because InputHandler doesn't exist with key mapping logic.",
+      "explanation": [
+        "5 arrow key mapping tests failing in tests/unit/input.test.js",
+        "Requires mapKeyToAction() method with key name lookup",
+        "Must return action strings for game controller"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Support dual control schemes: Arrow keys and WASD"
+      }
+    },
+    {
+      "id": 15,
+      "name": "Dual Control Schemes - WASD Keys",
+      "description": "Map WASD keys to same actions as arrow keys for alternative control scheme",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Add WASD mappings",
+          "description": "A→moveLeft, D→moveRight, S→softDrop, W→rotate",
+          "context": "Developer-friendly controls"
+        },
+        {
+          "step_number": 2,
+          "action": "Handle case insensitivity",
+          "description": "Both uppercase and lowercase should work",
+          "context": "User convenience"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 61,
+          "input": "mapKeyToAction({name: 'a'})",
+          "expected": "Returns 'moveLeft'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map A key to move left action"
+        },
+        {
+          "id": 62,
+          "input": "mapKeyToAction({name: 'd'})",
+          "expected": "Returns 'moveRight'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map D key to move right action"
+        },
+        {
+          "id": 63,
+          "input": "mapKeyToAction({name: 's'})",
+          "expected": "Returns 'softDrop'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map S key to soft drop action"
+        },
+        {
+          "id": 64,
+          "input": "mapKeyToAction({name: 'w'})",
+          "expected": "Returns 'rotate'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map W key to rotate action"
+        },
+        {
+          "id": 65,
+          "input": "mapKeyToAction with uppercase WASD",
+          "expected": "All map correctly",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should handle uppercase WASD keys"
+        },
+        {
+          "id": 66,
+          "input": "mapKeyToAction with lowercase wasd",
+          "expected": "All map correctly",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should handle lowercase WASD keys"
+        }
+      ],
+      "expected": {
+        "success": [
+          "WASD keys map to same actions as arrows",
+          "Case insensitive"
+        ],
+        "failures": [
+          "WASD not mapped",
+          "Case sensitivity issues"
+        ],
+        "performance": [
+          "Mapping < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/input/InputHandler.js",
+            "snippets": [],
+            "notes": "WASD mappings not added"
+          }
+        ],
+        "notes": "Should work simultaneously with arrow keys"
+      },
+      "expectation": "WASD control scheme should work identically to arrow keys with case-insensitive support.",
+      "prediction": "Tests fail because WASD key mappings don't exist in InputHandler.",
+      "explanation": [
+        "6 WASD mapping tests failing in tests/unit/input.test.js",
+        "Requires expanding mapKeyToAction() to handle WASD",
+        "Must handle both uppercase and lowercase"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Support dual control schemes: Arrow keys and WASD"
+      }
+    },
+    {
+      "id": 16,
+      "name": "Game Control Keys",
+      "description": "Map P for pause, Q/Esc for quit, R for restart",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Add game control mappings",
+          "description": "P→pause, Q→quit, Esc→quit, R→restart",
+          "context": "Meta-game controls"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 67,
+          "input": "mapKeyToAction({name: 'p'})",
+          "expected": "Returns 'pause'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map P key to pause action"
+        },
+        {
+          "id": 68,
+          "input": "mapKeyToAction({name: 'q'})",
+          "expected": "Returns 'quit'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map Q key to quit action"
+        },
+        {
+          "id": 69,
+          "input": "mapKeyToAction({name: 'escape'})",
+          "expected": "Returns 'quit'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map Escape key to quit action"
+        },
+        {
+          "id": 70,
+          "input": "mapKeyToAction({name: 'r'})",
+          "expected": "Returns 'restart'",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should map R key to restart action"
+        }
+      ],
+      "expected": {
+        "success": [
+          "All game control keys mapped",
+          "Pause, quit, restart work"
+        ],
+        "failures": [
+          "Control keys not mapped"
+        ],
+        "performance": [
+          "Mapping < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/input/InputHandler.js",
+            "snippets": [],
+            "notes": "Game control mappings not added"
+          }
+        ],
+        "notes": "Essential for game flow control"
+      },
+      "expectation": "Pause/Resume functionality (P key) and quit game (Q or Esc key) should be mapped correctly.",
+      "prediction": "Tests fail because game control key mappings don't exist.",
+      "explanation": [
+        "4 game control key tests failing in tests/unit/input.test.js",
+        "Requires P, Q, Esc, R mappings in mapKeyToAction()"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Pause/Resume functionality (P key)"
+      }
+    },
+    {
+      "id": 17,
+      "name": "Input Event Handling",
+      "description": "Emit action events when keys are pressed, handle multiple rapid keypresses, ignore unknown keys",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement event emitter pattern",
+          "description": "Use EventEmitter or custom event system",
+          "context": "Decouple input from game logic"
+        },
+        {
+          "step_number": 2,
+          "action": "Handle keypress events",
+          "description": "Listen to stdin keypresses, map to actions, emit events",
+          "context": "Core input processing"
+        },
+        {
+          "step_number": 3,
+          "action": "Implement input response time test",
+          "description": "Ensure processing completes within 50ms",
+          "context": "NFR-1: Input latency under 50ms"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 71,
+          "input": "handleKeyPress({name: 'left'})",
+          "expected": "Emits 'moveLeft' action event",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should emit action events when keys are pressed"
+        },
+        {
+          "id": 72,
+          "input": "Rapid keypresses: left, right, down",
+          "expected": "All 3 actions captured in order",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should handle multiple rapid keypresses"
+        },
+        {
+          "id": 73,
+          "input": "mapKeyToAction({name: 'x'})",
+          "expected": "Returns null (unknown key ignored)",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should ignore unknown keys"
+        },
+        {
+          "id": 74,
+          "input": "handleKeyPress timing test",
+          "expected": "Processing completes < 50ms",
+          "type": "unit",
+          "test_file": "tests/unit/input.test.js",
+          "test_name": "should process input within 50ms target"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Action events emitted correctly",
+          "Multiple inputs handled",
+          "Unknown keys ignored",
+          "Processing under 50ms"
+        ],
+        "failures": [
+          "Events not emitted",
+          "Input lag > 50ms"
+        ],
+        "performance": [
+          "Input processing < 50ms (NFR-1)"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/input/InputHandler.js",
+            "snippets": [],
+            "notes": "Event handling not implemented"
+          }
+        ],
+        "notes": "Critical for responsive gameplay"
+      },
+      "expectation": "Immediate keypress detection (raw mode input) should process input within 50ms for responsive controls.",
+      "prediction": "Tests fail because InputHandler doesn't have event handling logic.",
+      "explanation": [
+        "4 input event handling tests failing in tests/unit/input.test.js",
+        "Requires event emitter implementation",
+        "Must handle rapid input without blocking",
+        "NFR-1 requires sub-50ms response time"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Immediate keypress detection (raw mode input)"
+      }
+    },
+    {
+      "id": 18,
+      "name": "Complete Game Flow",
+      "description": "Integration test: Initialize game, move pieces, handle locking, clear lines, update score",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Create Game class",
+          "description": "Main controller coordinating all game systems",
+          "context": "src/game/Game.js"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement game initialization",
+          "description": "Set up board, spawn first piece, initialize state",
+          "context": "Constructor and start() method"
+        },
+        {
+          "step_number": 3,
+          "action": "Implement movement methods",
+          "description": "moveLeft(), moveRight(), softDrop(), hardDrop(), rotate()",
+          "context": "Validate moves with collision detection"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 75,
+          "input": "new Game()",
+          "expected": "Game initialized with score=0, level=1, board, pieces",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should initialize a new game with default state"
+        },
+        {
+          "id": 76,
+          "input": "game.currentPiece on init",
+          "expected": "Piece at x=3, y=0",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should spawn first piece at top center"
+        },
+        {
+          "id": 77,
+          "input": "game.nextPiece on init",
+          "expected": "Next piece is defined and valid type",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should generate next piece preview"
+        },
+        {
+          "id": 78,
+          "input": "moveLeft(), moveRight(), rotate(), softDrop()",
+          "expected": "All movements work and update position/score",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should play through a complete game flow"
+        },
+        {
+          "id": 79,
+          "input": "hardDrop()",
+          "expected": "Piece locks, new piece spawns",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should handle piece locking and spawning new piece"
+        },
+        {
+          "id": 80,
+          "input": "Complete a line",
+          "expected": "Line cleared, score updated, linesCleared incremented",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should clear lines and update score when lines are completed"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Game initializes correctly",
+          "All movements work",
+          "Pieces lock and spawn",
+          "Lines clear and score updates"
+        ],
+        "failures": [
+          "Module not found",
+          "Game flow broken"
+        ],
+        "performance": [
+          "Game initialization < 10ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Game class not implemented"
+          }
+        ],
+        "notes": "Central orchestration class"
+      },
+      "expectation": "Complete game session should work from start to finish with all mechanics integrated: movement, locking, line clearing, scoring.",
+      "prediction": "Tests fail with 'Cannot find module' error for src/game/Game.js.",
+      "explanation": [
+        "6 gameplay integration tests failing in tests/integration/gameplay.test.js",
+        "Requires Game class coordinating Board, Tetromino, ScoringEngine",
+        "Must implement all movement methods with collision checking",
+        "Must handle piece locking and spawning"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Game Controller: Orchestrates game loop, coordinates between input/state/rendering"
+      }
+    },
+    {
+      "id": 19,
+      "name": "Pause and Resume Functionality",
+      "description": "Game should pause when P is pressed, blocking updates and input, then resume on second press",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Add isPaused state flag",
+          "description": "Track whether game is paused",
+          "context": "Game class property"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement pause() method",
+          "description": "Toggle pause state",
+          "context": "Called from input handler"
+        },
+        {
+          "step_number": 3,
+          "action": "Block updates when paused",
+          "description": "Check isPaused in update() and movement methods",
+          "context": "Prevent gameplay while paused"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 81,
+          "input": "game.pause()",
+          "expected": "isPaused = true",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should pause game when pause() is called"
+        },
+        {
+          "id": 82,
+          "input": "pause() twice",
+          "expected": "isPaused = false (toggled)",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should resume game when pause() is called again"
+        },
+        {
+          "id": 83,
+          "input": "update() while paused",
+          "expected": "Piece doesn't move",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should not update game state when paused"
+        },
+        {
+          "id": 84,
+          "input": "moveLeft() while paused",
+          "expected": "Piece doesn't move",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should not accept movement input when paused"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Pause toggles correctly",
+          "Updates blocked when paused",
+          "Input blocked when paused"
+        ],
+        "failures": [
+          "Pause state not working",
+          "Updates continue during pause"
+        ],
+        "performance": [
+          "Pause toggle < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Pause functionality not implemented"
+          }
+        ],
+        "notes": "Essential for user experience"
+      },
+      "expectation": "Pause/resume without losing state should work correctly, blocking gameplay while paused.",
+      "prediction": "Tests fail because Game class doesn't have pause state and logic.",
+      "explanation": [
+        "4 pause/resume tests failing in tests/integration/gameplay.test.js",
+        "Requires isPaused boolean property",
+        "pause() method to toggle state",
+        "Checks in update() and movement methods"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Pause/resume without losing state"
+      }
+    },
+    {
+      "id": 20,
+      "name": "Game Over Conditions and State",
+      "description": "Game over when pieces stack to top, block input, display final stats",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Add isGameOver state flag",
+          "description": "Track game over state",
+          "context": "Game class property"
+        },
+        {
+          "step_number": 2,
+          "action": "Check game over on piece spawn",
+          "description": "Use board.isGameOver() when spawning new piece",
+          "context": "Primary trigger"
+        },
+        {
+          "step_number": 3,
+          "action": "Block input when game over",
+          "description": "Don't process actions if isGameOver is true",
+          "context": "Prevent post-game movement"
+        },
+        {
+          "step_number": 4,
+          "action": "Implement getFinalStats()",
+          "description": "Return object with score, level, lines, time",
+          "context": "For game over screen"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 85,
+          "input": "Fill board to top, spawn piece",
+          "expected": "isGameOver = true",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should trigger game over when pieces stack to top"
+        },
+        {
+          "id": 86,
+          "input": "moveLeft() when game over",
+          "expected": "Piece doesn't move",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should not accept input after game over"
+        },
+        {
+          "id": 87,
+          "input": "getFinalStats() with score=1500, level=3, lines=25",
+          "expected": "Returns object with all stats",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should display final statistics on game over"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Game over detected correctly",
+          "Input blocked after game over",
+          "Final stats available"
+        ],
+        "failures": [
+          "Game over not detected",
+          "Input still accepted"
+        ],
+        "performance": [
+          "Game over check < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Game over handling not implemented"
+          }
+        ],
+        "notes": "Critical end condition"
+      },
+      "expectation": "Proper game over detection and handling when pieces stack to the top with final statistics display.",
+      "prediction": "Tests fail because game over logic doesn't exist in Game class.",
+      "explanation": [
+        "3 game over tests failing in tests/integration/gameplay.test.js",
+        "Requires isGameOver flag",
+        "Check on piece spawn using board.isGameOver()",
+        "getFinalStats() method for statistics"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Proper game over detection and handling"
+      }
+    },
+    {
+      "id": 21,
+      "name": "Level Progression During Gameplay",
+      "description": "Level advances every 10 lines with gravity speed increase",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement checkLevelUp() method",
+          "description": "Check if linesCleared threshold reached, update level and gravity",
+          "context": "Called after line clears"
+        },
+        {
+          "step_number": 2,
+          "action": "Update gravity delay",
+          "description": "Recalculate gravityDelay when level changes",
+          "context": "Makes game progressively harder"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 88,
+          "input": "linesCleared=10, checkLevelUp()",
+          "expected": "level = 2",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should advance level after clearing 10 lines"
+        },
+        {
+          "id": 89,
+          "input": "Level up",
+          "expected": "gravityDelay decreases",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should increase gravity speed when level increases"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Level advances at 10-line intervals",
+          "Gravity speeds up with level"
+        ],
+        "failures": [
+          "Level doesn't advance",
+          "Gravity doesn't change"
+        ],
+        "performance": [
+          "Level check < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Level progression not implemented"
+          }
+        ],
+        "notes": "Makes game progressively challenging"
+      },
+      "expectation": "Level advancement should occur every 10 lines cleared with corresponding gravity speed increases.",
+      "prediction": "Tests fail because level progression logic doesn't exist.",
+      "explanation": [
+        "2 level progression integration tests failing",
+        "Requires checkLevelUp() or similar method",
+        "Must update both level and gravityDelay properties"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Level advancement based on lines cleared (every 10 lines)"
+      }
+    },
+    {
+      "id": 22,
+      "name": "Scoring Integration",
+      "description": "Scoring system integrated into gameplay for drops and line clears",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Integrate ScoringEngine",
+          "description": "Create scoring engine instance in Game class",
+          "context": "Used for all score calculations"
+        },
+        {
+          "step_number": 2,
+          "action": "Call scoring methods",
+          "description": "Award points in softDrop(), hardDrop(), and line clear handling",
+          "context": "Update score property"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 90,
+          "input": "handleLineClear(1) at level 1",
+          "expected": "score = 100",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should award correct points for single line clear at level 1"
+        },
+        {
+          "id": 91,
+          "input": "handleLineClear(4) at level 1",
+          "expected": "score = 800",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should award correct points for tetris at level 1"
+        },
+        {
+          "id": 92,
+          "input": "handleLineClear(1) at level 5",
+          "expected": "score = 500",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should scale points by level"
+        },
+        {
+          "id": 93,
+          "input": "softDrop(3 cells) + handleLineClear(1)",
+          "expected": "score = softDropPoints + 100",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should combine soft drop and line clear points"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Line clear points awarded correctly",
+          "Points scale by level",
+          "Drop and line points combine"
+        ],
+        "failures": [
+          "Scoring not integrated",
+          "Wrong point values"
+        ],
+        "performance": [
+          "Score update < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Scoring integration not implemented"
+          }
+        ],
+        "notes": "Connect scoring to game actions"
+      },
+      "expectation": "Scoring system should be fully integrated with drops and line clears, awarding correct points.",
+      "prediction": "Tests fail because scoring integration doesn't exist in Game class.",
+      "explanation": [
+        "4 scoring integration tests failing",
+        "Requires ScoringEngine instance in Game",
+        "Must call scoring methods in game actions",
+        "Must update score property correctly"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Scoring system matches classic Tetris formula exactly"
+      }
+    },
+    {
+      "id": 23,
+      "name": "Piece Movement Validation",
+      "description": "Prevent invalid moves through walls and pieces, handle rotation collisions",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Add collision checks to movement",
+          "description": "Before moving, check if new position would collide",
+          "context": "Use board.isColliding()"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement rotation validation",
+          "description": "Check if rotation would collide, attempt wall kick if needed",
+          "context": "Advanced: wall kick system"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 94,
+          "input": "Move piece to x=0, try moveLeft()",
+          "expected": "Piece stays at x=0",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should prevent piece from moving through walls"
+        },
+        {
+          "id": 95,
+          "input": "I-piece at x=0, rotate()",
+          "expected": "Either rotation blocked or wall kick applied",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should prevent piece from rotating if it would collide"
+        },
+        {
+          "id": 96,
+          "input": "Move piece to bottom, try to lock",
+          "expected": "Piece placed on board, new piece spawned",
+          "type": "integration",
+          "test_file": "tests/integration/gameplay.test.js",
+          "test_name": "should lock piece when it reaches bottom"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Invalid moves prevented",
+          "Rotation collision handled",
+          "Piece locking works"
+        ],
+        "failures": [
+          "Pieces go through walls",
+          "Invalid rotations allowed"
+        ],
+        "performance": [
+          "Validation < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Movement validation not implemented"
+          }
+        ],
+        "notes": "Critical for game integrity"
+      },
+      "expectation": "Invalid moves should be prevented with proper collision detection for walls and other pieces.",
+      "prediction": "Tests fail because movement validation isn't implemented in Game class.",
+      "explanation": [
+        "3 movement validation integration tests failing",
+        "Requires collision checking before allowing moves",
+        "Must use board.isColliding() for validation",
+        "Rotation needs special handling for wall kicks"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Invalid moves ignored (piece doesn't move through walls)"
+      }
+    },
+    {
+      "id": 24,
+      "name": "Rendering System - ANSI Colors",
+      "description": "Render game board, pieces, and UI with ANSI colors in terminal",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Create Renderer class",
+          "description": "Handle all terminal output and ANSI formatting",
+          "context": "src/render/Renderer.js"
+        },
+        {
+          "step_number": 2,
+          "action": "Detect color support",
+          "description": "Check terminal capabilities for color support",
+          "context": "Graceful degradation to monochrome"
+        },
+        {
+          "step_number": 3,
+          "action": "Implement board rendering",
+          "description": "Draw 10x20 grid with borders and pieces",
+          "context": "Use box-drawing characters"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 97,
+          "input": "new Renderer()",
+          "expected": "Renderer with color support detection",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should initialize renderer with color support detection"
+        },
+        {
+          "id": 98,
+          "input": "renderer.supportsColor",
+          "expected": "Boolean value",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should detect ANSI color support"
+        },
+        {
+          "id": 99,
+          "input": "new Renderer()",
+          "expected": "terminalWidth and terminalHeight > 0",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should initialize with proper terminal dimensions"
+        },
+        {
+          "id": 100,
+          "input": "renderBoard(emptyBoard)",
+          "expected": "String with board representation",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render empty board"
+        },
+        {
+          "id": 101,
+          "input": "renderBoard with placed pieces",
+          "expected": "Board showing filled cells",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render board with placed pieces"
+        },
+        {
+          "id": 102,
+          "input": "renderBoard(board)",
+          "expected": "Contains border characters",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render board borders"
+        },
+        {
+          "id": 103,
+          "input": "renderBoard(board)",
+          "expected": "At least 20 rows rendered",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render 10x20 grid correctly"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Renderer initializes",
+          "Board renders correctly",
+          "Borders displayed"
+        ],
+        "failures": [
+          "Module not found",
+          "Rendering errors"
+        ],
+        "performance": [
+          "Render < 16ms (60 FPS)"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/render/Renderer.js",
+            "snippets": [],
+            "notes": "Not implemented"
+          }
+        ],
+        "notes": "Visual output system"
+      },
+      "expectation": "Full screen clear (console.clear()) for simplicity and reliability with proper ANSI color rendering.",
+      "prediction": "Tests fail with 'Cannot find module' error for src/render/Renderer.js.",
+      "explanation": [
+        "7 rendering initialization tests failing",
+        "Requires Renderer class with color detection",
+        "renderBoard() method to draw grid",
+        "ANSI escape sequences for formatting"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Full screen clear (console.clear()) for simplicity and reliability"
+      }
+    },
+    {
+      "id": 25,
+      "name": "Piece Coloring and Rendering",
+      "description": "Render each tetromino type with its designated color, fallback to monochrome",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement color mapping",
+          "description": "Map piece types to ANSI color codes using chalk",
+          "context": "I=cyan, O=yellow, T=purple, etc."
+        },
+        {
+          "step_number": 2,
+          "action": "Implement monochrome fallback",
+          "description": "Use different characters when colors not supported",
+          "context": "Accessibility requirement"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 104,
+          "input": "renderPiece(iPiece) with color",
+          "expected": "Cyan colored output",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render I-piece with cyan color"
+        },
+        {
+          "id": 105,
+          "input": "renderPiece(oPiece) with color",
+          "expected": "Yellow colored output",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render O-piece with yellow color"
+        },
+        {
+          "id": 106,
+          "input": "renderPiece(tPiece) with color",
+          "expected": "Purple colored output",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render T-piece with purple color"
+        },
+        {
+          "id": 107,
+          "input": "renderPiece with monochrome renderer",
+          "expected": "No ANSI color codes in output",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should fallback to monochrome when color not supported"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Pieces render with correct colors",
+          "Monochrome fallback works"
+        ],
+        "failures": [
+          "Colors incorrect or missing",
+          "Monochrome not working"
+        ],
+        "performance": [
+          "Piece rendering < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/render/Renderer.js",
+            "snippets": [],
+            "notes": "Piece coloring not implemented"
+          }
+        ],
+        "notes": "Use chalk library for colors"
+      },
+      "expectation": "Each tetromino type should display in a unique color with graceful degradation on terminals without color support.",
+      "prediction": "Tests fail because Renderer doesn't exist with piece coloring methods.",
+      "explanation": [
+        "4 piece coloring tests failing",
+        "Requires renderPiece() method with color mapping",
+        "Must use chalk library for ANSI colors",
+        "Monochrome fallback for unsupported terminals"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Each tetromino type displays in a unique color"
+      }
+    },
+    {
+      "id": 26,
+      "name": "Statistics and UI Rendering",
+      "description": "Render score, level, lines cleared, next piece preview, and control hints",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement renderStats()",
+          "description": "Display score, level, lines in formatted panel",
+          "context": "Right side panel"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement renderNextPiece()",
+          "description": "Show preview of next piece",
+          "context": "Part of side panel"
+        },
+        {
+          "step_number": 3,
+          "action": "Implement renderControls()",
+          "description": "Show control hints for arrows and WASD",
+          "context": "Help text for players"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 108,
+          "input": "renderStats with score=1250",
+          "expected": "Output contains '1250' and 'score'",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render score display"
+        },
+        {
+          "id": 109,
+          "input": "renderStats with level=5",
+          "expected": "Output contains '5' and 'level'",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render level display"
+        },
+        {
+          "id": 110,
+          "input": "renderStats with lines=23",
+          "expected": "Output contains '23' and 'lines'",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render lines cleared display"
+        },
+        {
+          "id": 111,
+          "input": "renderNextPiece(nextPiece)",
+          "expected": "String representation of next piece",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render next piece preview"
+        },
+        {
+          "id": 112,
+          "input": "renderControls()",
+          "expected": "Contains 'move', 'rotate', 'drop', 'pause'",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render control hints"
+        },
+        {
+          "id": 113,
+          "input": "renderControls()",
+          "expected": "Shows both arrows and WASD",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should show both arrow and WASD controls"
+        },
+        {
+          "id": 114,
+          "input": "renderControls()",
+          "expected": "Contains 'SPACE' for hard drop",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should show space for hard drop"
+        }
+      ],
+      "expected": {
+        "success": [
+          "All stats render correctly",
+          "Next piece shown",
+          "Controls displayed"
+        ],
+        "failures": [
+          "Stats not rendering",
+          "Controls missing"
+        ],
+        "performance": [
+          "UI rendering < 5ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/render/Renderer.js",
+            "snippets": [],
+            "notes": "UI rendering methods not implemented"
+          }
+        ],
+        "notes": "Essential for player information"
+      },
+      "expectation": "Score, level, and statistics panel should be displayed prominently with next piece preview.",
+      "prediction": "Tests fail because Renderer doesn't have stats rendering methods.",
+      "explanation": [
+        "7 statistics/UI rendering tests failing",
+        "Requires renderStats(), renderNextPiece(), renderControls() methods",
+        "Must format and display game state information"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Score, level, and statistics panel"
+      }
+    },
+    {
+      "id": 27,
+      "name": "Complete Screen Rendering",
+      "description": "Render full game screen including board, stats, pause, and game over screens",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement render() main method",
+          "description": "Combine all rendering components into full screen",
+          "context": "Called each frame"
+        },
+        {
+          "step_number": 2,
+          "action": "Handle game state rendering",
+          "description": "Different output for playing, paused, game over",
+          "context": "Conditional rendering"
+        },
+        {
+          "step_number": 3,
+          "action": "Implement screen clearing",
+          "description": "Clear terminal before each render",
+          "context": "console.clear() or ANSI codes"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 115,
+          "input": "render(game)",
+          "expected": "Full screen output string",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render complete game screen"
+        },
+        {
+          "id": 116,
+          "input": "render(game) during play",
+          "expected": "Contains score, level, lines",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should include all screen elements in full render"
+        },
+        {
+          "id": 117,
+          "input": "render(pausedGame)",
+          "expected": "Contains 'pause' indicator",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render pause screen when paused"
+        },
+        {
+          "id": 118,
+          "input": "render(gameOverGame)",
+          "expected": "Contains 'game over' and final score",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should render game over screen when game ends"
+        },
+        {
+          "id": 119,
+          "input": "renderer.clear()",
+          "expected": "No errors",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should clear screen before rendering"
+        },
+        {
+          "id": 120,
+          "input": "renderer.hideCursor()",
+          "expected": "cursorVisible = false",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should hide cursor during gameplay"
+        },
+        {
+          "id": 121,
+          "input": "renderer.showCursor()",
+          "expected": "cursorVisible = true",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should restore cursor on exit"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Complete screen renders",
+          "State-specific rendering works",
+          "Cursor management works"
+        ],
+        "failures": [
+          "Incomplete rendering",
+          "State screens missing"
+        ],
+        "performance": [
+          "Full render < 16ms (60 FPS)"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/render/Renderer.js",
+            "snippets": [],
+            "notes": "Main render() method not implemented"
+          }
+        ],
+        "notes": "Core rendering pipeline"
+      },
+      "expectation": "Complete game screen rendering with all UI elements, pause screen, and game over screen functioning correctly.",
+      "prediction": "Tests fail because main render() method doesn't exist.",
+      "explanation": [
+        "7 complete screen rendering tests failing",
+        "Requires render() method that combines all components",
+        "Must handle different game states (playing/paused/game over)",
+        "clear(), hideCursor(), showCursor() methods needed"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Full screen clear (console.clear()) for simplicity and reliability"
+      }
+    },
+    {
+      "id": 28,
+      "name": "Terminal Size Validation",
+      "description": "Check terminal meets minimum size requirements (40×24), provide warnings if too small",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement checkTerminalSize()",
+          "description": "Validate terminal dimensions against minimum",
+          "context": "40 columns × 24 rows minimum"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement getTerminalSizeWarning()",
+          "description": "Return helpful message for undersized terminals",
+          "context": "User guidance"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 122,
+          "input": "checkTerminalSize(40, 24)",
+          "expected": "Returns true",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should check minimum terminal size requirement"
+        },
+        {
+          "id": 123,
+          "input": "checkTerminalSize(30, 20)",
+          "expected": "Returns false",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should reject terminal that is too small"
+        },
+        {
+          "id": 124,
+          "input": "getTerminalSizeWarning(30, 20)",
+          "expected": "Message contains 'terminal', '40', '24'",
+          "type": "integration",
+          "test_file": "tests/integration/rendering.test.js",
+          "test_name": "should provide warning message for small terminals"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Size validation works",
+          "Warning messages generated"
+        ],
+        "failures": [
+          "Validation incorrect",
+          "No warnings"
+        ],
+        "performance": [
+          "Validation < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/render/Renderer.js",
+            "snippets": [],
+            "notes": "Size validation not implemented"
+          }
+        ],
+        "notes": "User experience consideration"
+      },
+      "expectation": "Minimum terminal size requirement (40 columns × 24 rows) should be validated with warnings provided.",
+      "prediction": "Tests fail because terminal size validation methods don't exist.",
+      "explanation": [
+        "3 terminal size validation tests failing",
+        "Requires checkTerminalSize() method",
+        "getTerminalSizeWarning() for user feedback"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Minimum terminal size: 40 columns × 24 rows"
+      }
+    },
+    {
+      "id": 29,
+      "name": "Game Loop with Delta Time",
+      "description": "Implement game loop using setTimeout with delta-time calculation for consistent timing",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Create GameLoop class",
+          "description": "Manage game loop timing with delta-time",
+          "context": "src/game/GameLoop.js"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement start/stop methods",
+          "description": "Control loop execution",
+          "context": "Use setTimeout, not setInterval"
+        },
+        {
+          "step_number": 3,
+          "action": "Calculate delta time",
+          "description": "Measure time between frames for consistent updates",
+          "context": "Prevents drift"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 125,
+          "input": "new GameLoop()",
+          "expected": "Loop exists, isRunning=false, targetFPS=30-60",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should initialize game loop with proper timing"
+        },
+        {
+          "id": 126,
+          "input": "loop.start()",
+          "expected": "isRunning = true",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should start game loop when start() is called"
+        },
+        {
+          "id": 127,
+          "input": "loop.start(), loop.stop()",
+          "expected": "isRunning = false",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should stop game loop when stop() is called"
+        },
+        {
+          "id": 128,
+          "input": "Run loop, measure deltaTime",
+          "expected": "deltaTime > 0 and < 1000ms",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should calculate delta time between frames"
+        },
+        {
+          "id": 129,
+          "input": "Run loop for 200ms",
+          "expected": "Delta times relatively consistent",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should maintain consistent timing across frames"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Loop initializes correctly",
+          "Start/stop work",
+          "Delta time calculated"
+        ],
+        "failures": [
+          "Module not found",
+          "Timing issues"
+        ],
+        "performance": [
+          "Loop overhead < 5ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/GameLoop.js",
+            "snippets": [],
+            "notes": "Not implemented"
+          }
+        ],
+        "notes": "Core timing system"
+      },
+      "expectation": "setTimeout with delta-time calculation should provide precise control over game speed and enable proper pause functionality.",
+      "prediction": "Tests fail with 'Cannot find module' error for src/game/GameLoop.js.",
+      "explanation": [
+        "5 game loop initialization and timing tests failing",
+        "Requires GameLoop class with setTimeout-based loop",
+        "Delta time tracking for frame-rate independent updates"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Use setTimeout with delta-time calculation. This provides precise control over game speed, enables proper pause functionality"
+      }
+    },
+    {
+      "id": 30,
+      "name": "Frame Rate Control",
+      "description": "Target 60 FPS with throttling, allow custom FPS configuration",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Set target FPS",
+          "description": "Default to 60 FPS, allow configuration",
+          "context": "Constructor option"
+        },
+        {
+          "step_number": 2,
+          "action": "Throttle frame rate",
+          "description": "Ensure loop doesn't exceed target FPS",
+          "context": "Calculate next frame delay"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 130,
+          "input": "new GameLoop()",
+          "expected": "targetFPS = 60",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should target 60 FPS by default"
+        },
+        {
+          "id": 131,
+          "input": "new GameLoop(null, {targetFPS: 30})",
+          "expected": "targetFPS = 30",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should allow custom FPS target"
+        },
+        {
+          "id": 132,
+          "input": "Run loop at 30 FPS for 1 second",
+          "expected": "~30 frames (24-36 with tolerance)",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should throttle to target FPS"
+        }
+      ],
+      "expected": {
+        "success": [
+          "FPS configuration works",
+          "Throttling effective"
+        ],
+        "failures": [
+          "FPS not respected",
+          "Too many/few frames"
+        ],
+        "performance": [
+          "Maintains target FPS ±20%"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/GameLoop.js",
+            "snippets": [],
+            "notes": "FPS control not implemented"
+          }
+        ],
+        "notes": "NFR-1: Consistent 30-60 FPS"
+      },
+      "expectation": "Consistent 30-60 FPS rendering rate should be maintained with proper frame rate control.",
+      "prediction": "Tests fail because GameLoop doesn't exist with FPS throttling.",
+      "explanation": [
+        "3 frame rate control tests failing",
+        "Requires targetFPS property and throttling logic",
+        "Must calculate frame delay based on target FPS",
+        "NFR-1 requirement for performance"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Consistent 30-60 FPS rendering rate"
+      }
+    },
+    {
+      "id": 31,
+      "name": "Game Loop Pause Functionality",
+      "description": "Pause game loop to stop updates while maintaining loop state",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Add pause/resume methods to GameLoop",
+          "description": "Control update execution without stopping loop",
+          "context": "Set flag to skip updates"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 133,
+          "input": "loop.start(), loop.pause(), wait 100ms",
+          "expected": "Update count doesn't increase",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should pause game loop updates"
+        },
+        {
+          "id": 134,
+          "input": "loop.pause(), loop.resume(), wait 100ms",
+          "expected": "Updates resume",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should resume game loop after pause"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Pause stops updates",
+          "Resume continues updates"
+        ],
+        "failures": [
+          "Pause doesn't work",
+          "Resume fails"
+        ],
+        "performance": [
+          "Pause/resume < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/GameLoop.js",
+            "snippets": [],
+            "notes": "Pause functionality not implemented"
+          }
+        ],
+        "notes": "Required for pause feature"
+      },
+      "expectation": "Game loop should support pausing to enable proper pause functionality without losing timing state.",
+      "prediction": "Tests fail because pause/resume methods don't exist in GameLoop.",
+      "explanation": [
+        "2 pause functionality tests failing",
+        "Requires pause() and resume() methods in GameLoop",
+        "Must skip updates when paused but keep loop running"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "enables proper pause functionality"
+      }
+    },
+    {
+      "id": 32,
+      "name": "Gravity System Integration",
+      "description": "Automatic piece descent based on gravity speed, increasing with level, no score awarded",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement gravity timer in Game",
+          "description": "Track time since last gravity drop",
+          "context": "Accumulate delta time"
+        },
+        {
+          "step_number": 2,
+          "action": "Apply gravity in update()",
+          "description": "When timer exceeds gravityDelay, move piece down",
+          "context": "Called from game loop"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 135,
+          "input": "game.start(), wait for gravity",
+          "expected": "Piece y increases",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should move piece down automatically based on gravity"
+        },
+        {
+          "id": 136,
+          "input": "Compare gravity speed level 1 vs 5 vs 10",
+          "expected": "Speed increases (delay decreases) with level",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should increase gravity speed at higher levels"
+        },
+        {
+          "id": 137,
+          "input": "Let gravity move piece",
+          "expected": "Score unchanged (gravity = 0 points)",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should apply gravity without awarding points"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Gravity moves pieces automatically",
+          "Speed increases with level",
+          "No points for gravity"
+        ],
+        "failures": [
+          "Pieces don't fall",
+          "Wrong speed",
+          "Points awarded incorrectly"
+        ],
+        "performance": [
+          "Gravity update < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Gravity system not integrated with loop"
+          }
+        ],
+        "notes": "Core gameplay mechanic"
+      },
+      "expectation": "Automatic gravity-based piece descent should work with level-based speed increases and no score awarded.",
+      "prediction": "Tests fail because gravity system isn't integrated into Game update loop.",
+      "explanation": [
+        "3 gravity integration tests failing",
+        "Requires gravity timer accumulation in update()",
+        "Must call moveDown() when timer exceeds gravityDelay",
+        "getGravitySpeed() must scale with level"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Automatic gravity-based piece descent"
+      }
+    },
+    {
+      "id": 33,
+      "name": "Performance Requirements",
+      "description": "Maintain 30+ FPS with fast update times for smooth gameplay",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Optimize update loop",
+          "description": "Ensure game.update() completes quickly",
+          "context": "Profile and optimize"
+        },
+        {
+          "step_number": 2,
+          "action": "Test FPS under load",
+          "description": "Verify frame rate during gameplay",
+          "context": "NFR-1 requirement"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 138,
+          "input": "Run game for 1 second",
+          "expected": "FPS >= 30",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should maintain 30+ FPS under normal conditions"
+        },
+        {
+          "id": 139,
+          "input": "Time update() calls",
+          "expected": "Average < 33ms (30 FPS threshold)",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should complete frame update within 33ms (30 FPS)"
+        }
+      ],
+      "expected": {
+        "success": [
+          "FPS >= 30 consistently",
+          "Updates fast enough"
+        ],
+        "failures": [
+          "FPS drops below 30",
+          "Updates too slow"
+        ],
+        "performance": [
+          "30+ FPS (NFR-1)",
+          "Update < 33ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Performance not measured yet"
+          }
+        ],
+        "notes": "NFR-1 critical requirement"
+      },
+      "expectation": "Game maintains 30+ FPS on standard terminals without frame drops meeting NFR-1 performance requirement.",
+      "prediction": "Tests fail because game loop and update system don't exist to measure.",
+      "explanation": [
+        "2 performance requirement tests failing",
+        "Requires functioning game loop with FPS tracking",
+        "update() method must complete within 33ms budget",
+        "NFR-1: Consistent 30-60 FPS rendering rate"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Game maintains 30+ FPS on standard terminals without frame drops"
+      }
+    },
+    {
+      "id": 34,
+      "name": "Cleanup and Exit Handling",
+      "description": "Clean up resources, restore terminal state on exit, handle signals",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Implement cleanup() method",
+          "description": "Stop loop, restore terminal, show cursor",
+          "context": "Called on exit"
+        },
+        {
+          "step_number": 2,
+          "action": "Register signal handlers",
+          "description": "Handle SIGINT (Ctrl+C) and SIGTERM gracefully",
+          "context": "Process cleanup on interrupt"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 140,
+          "input": "loop.start(), loop.stop()",
+          "expected": "isRunning=false, timerId=null",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should clean up resources on stop"
+        },
+        {
+          "id": 141,
+          "input": "game.start(), game.stop()",
+          "expected": "cleanupCalled = true",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should restore terminal state on game exit"
+        },
+        {
+          "id": 142,
+          "input": "game.handleExit() simulating SIGINT",
+          "expected": "Game stopped, cleanup called",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should handle SIGINT for clean exit"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Resources cleaned up",
+          "Terminal restored",
+          "Signals handled"
+        ],
+        "failures": [
+          "Terminal left in bad state",
+          "Resources not freed"
+        ],
+        "performance": [
+          "Cleanup < 100ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/GameLoop.js",
+            "snippets": [],
+            "notes": "Cleanup not implemented"
+          },
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Exit handling not implemented"
+          }
+        ],
+        "notes": "Critical for user experience"
+      },
+      "expectation": "Terminal state restores correctly on all exit paths (normal quit, Ctrl+C, crash) with proper cleanup handlers.",
+      "prediction": "Tests fail because cleanup methods and signal handlers don't exist.",
+      "explanation": [
+        "3 cleanup and exit tests failing",
+        "Requires cleanup() methods in Game and GameLoop",
+        "Signal handlers for SIGINT/SIGTERM needed",
+        "Must restore terminal state (raw mode, cursor)"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Terminal state restores correctly on all exit paths (normal quit, Ctrl+C, crash)"
+      }
+    },
+    {
+      "id": 35,
+      "name": "Input Integration with Game Loop",
+      "description": "Process input events during game loop, queue multiple inputs, update game state",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Connect InputHandler to Game",
+          "description": "Listen to input events and call game methods",
+          "context": "Event-driven architecture"
+        },
+        {
+          "step_number": 2,
+          "action": "Implement input queue",
+          "description": "Buffer inputs to process in update loop",
+          "context": "Handle rapid keypresses"
+        }
+      ],
+      "test_cases": [
+        {
+          "id": 143,
+          "input": "game.start(), handleInput('moveLeft')",
+          "expected": "Piece x decreases",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should process input during game loop"
+        },
+        {
+          "id": 144,
+          "input": "Queue moveLeft, moveLeft, rotate",
+          "expected": "All 3 actions processed",
+          "type": "integration",
+          "test_file": "tests/integration/game-loop.test.js",
+          "test_name": "should queue and process multiple inputs"
+        }
+      ],
+      "expected": {
+        "success": [
+          "Input processed correctly",
+          "Multiple inputs queued",
+          "Game state updates"
+        ],
+        "failures": [
+          "Input ignored",
+          "Queue doesn't work"
+        ],
+        "performance": [
+          "Input handling < 1ms"
+        ]
+      },
+      "implementation": {
+        "files": [
+          {
+            "file_path": "src/game/Game.js",
+            "snippets": [],
+            "notes": "Input integration not implemented"
+          }
+        ],
+        "notes": "Connect input to game logic"
+      },
+      "expectation": "Input handling should be integrated with game loop for responsive controls with input queueing for rapid keypresses.",
+      "prediction": "Tests fail because input-game integration doesn't exist.",
+      "explanation": [
+        "2 input integration tests failing",
+        "Requires handleInput() method in Game class",
+        "Input queue to buffer rapid keypresses",
+        "Process queue in update() loop"
+      ],
+      "status": "not_implemented",
+      "design_spec_quote": {
+        "selected_text": "Input-driven architecture prevents polling overhead"
+      }
+    }
+  ],
+  "summary": {
+    "total_scenarios": 35,
+    "complexity": "high",
+    "estimated_time": "240 minutes (4 hours)",
+    "test_coverage": {
+      "unit_tests": 73,
+      "integration_tests": 71,
+      "total_tests": 144
+    },
+    "implementation_status": {
+      "not_implemented": 35,
+      "partial": 0,
+      "completed": 0
+    },
+    "tdd_phase": "RED",
+    "next_steps": [
+      "Implement source files to make tests pass (TDD green phase)",
+      "Start with foundational classes: Tetromino, Board",
+      "Then implement game logic: ScoringEngine, Game",
+      "Add I/O layers: InputHandler, Renderer",
+      "Finally implement game loop: GameLoop",
+      "Refactor as needed (TDD refactor phase)"
+    ]
+  },
+  "test_to_scenario_mapping": {
+    "tests/unit/tetromino.test.js": [1, 2, 3],
+    "tests/unit/board.test.js": [4, 5, 6, 7, 8],
+    "tests/unit/scoring.test.js": [9, 10, 11, 12],
+    "tests/unit/input.test.js": [13, 14, 15, 16, 17],
+    "tests/integration/gameplay.test.js": [18, 19, 20, 21, 22, 23],
+    "tests/integration/rendering.test.js": [24, 25, 26, 27, 28],
+    "tests/integration/game-loop.test.js": [29, 30, 31, 32, 33, 34, 35]
+  }
+}

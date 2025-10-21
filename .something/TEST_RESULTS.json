@@ -1,0 +1,96 @@
+{
+  "run": {
+    "command": "npm test",
+    "passed": false,
+    "duration_ms": 3309,
+    "output": "Test Suites: 7 failed, 7 total\\nTests: 144 failed, 144 total\\nSnapshots: 0 total\\nTime: 3.309 s\\nRan all test suites.",
+    "summary": {
+      "total_suites": 7,
+      "failed_suites": 7,
+      "total_tests": 144,
+      "failed_tests": 144,
+      "passed_tests": 0
+    },
+    "failed_modules": [
+      "src/game/Tetromino.js",
+      "src/game/Board.js",
+      "src/game/ScoringEngine.js",
+      "src/game/Game.js",
+      "src/input/InputHandler.js",
+      "src/render/Renderer.js",
+      "src/game/GameLoop.js"
+    ],
+    "reason": "TDD RED PHASE: No implementation exists yet. All tests are failing because the source files have not been created. This is expected behavior for Test-Driven Development - tests are written first to define the requirements, then implementation will make them pass."
+  },
+  "test_suites": [
+    {
+      "file": "tests/unit/tetromino.test.js",
+      "status": "failed",
+      "tests_total": 18,
+      "tests_failed": 18,
+      "tests_passed": 0,
+      "reason": "Module not found: src/game/Tetromino.js"
+    },
+    {
+      "file": "tests/unit/board.test.js",
+      "status": "failed",
+      "tests_total": 18,
+      "tests_failed": 18,
+      "tests_passed": 0,
+      "reason": "Module not found: src/game/Board.js"
+    },
+    {
+      "file": "tests/unit/scoring.test.js",
+      "status": "failed",
+      "tests_total": 16,
+      "tests_failed": 16,
+      "tests_passed": 0,
+      "reason": "Module not found: src/game/ScoringEngine.js and src/game/Game.js"
+    },
+    {
+      "file": "tests/unit/input.test.js",
+      "status": "failed",
+      "tests_total": 21,
+      "tests_failed": 21,
+      "tests_passed": 0,
+      "reason": "Module not found: src/input/InputHandler.js"
+    },
+    {
+      "file": "tests/integration/gameplay.test.js",
+      "status": "failed",
+      "tests_total": 27,
+      "tests_failed": 27,
+      "tests_passed": 0,
+      "reason": "Module not found: src/game/Game.js"
+    },
+    {
+      "file": "tests/integration/rendering.test.js",
+      "status": "failed",
+      "tests_total": 29,
+      "tests_failed": 29,
+      "tests_passed": 0,
+      "reason": "Module not found: src/render/Renderer.js"
+    },
+    {
+      "file": "tests/integration/game-loop.test.js",
+      "status": "failed",
+      "tests_total": 15,
+      "tests_failed": 15,
+      "tests_passed": 0,
+      "reason": "Module not found: src/game/GameLoop.js"
+    }
+  ],
+  "coverage": {
+    "lines": 0,
+    "functions": 0,
+    "branches": 0,
+    "statements": 0,
+    "note": "No coverage data available because no implementation exists yet (TDD red phase)"
+  },
+  "timestamp": "2025-10-21T13:51:00.000Z",
+  "environment": {
+    "node_version": "v14+",
+    "test_framework": "Jest 29.7.0",
+    "platform": "linux"
+  }
+}
